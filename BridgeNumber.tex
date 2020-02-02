@@ -1,4 +1,4 @@
-\documentclass[titlepage]{article}
+\documentclass[titlepage,11pt]{article}
 
 \usepackage[letterpaper,margin=1in,footskip=0.25in]{geometry}
 \usepackage[nottoc,notlof,notlot]{tocbibind}
@@ -11,6 +11,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{float}
+\usepackage[onehalfspacing]{setspace}
 
 \usetikzlibrary{knots,decorations.markings}
 
@@ -32,19 +33,22 @@
     linewidth=0,
     backgroundcolor = blue!10,
     innertopmargin = \topskip,
-    innerbottommargin = \topskip
+    innerbottommargin = \topskip,
+    splittopskip = 2\topsep
 ]{defi}
 \newmdenv[
     linewidth=0,
     backgroundcolor = yellow!80!red!10,
     innertopmargin = \topskip,
-    innerbottommargin = \topskip
+    innerbottommargin = \topskip,
+    splittopskip = 2\topsep
 ]{theor}
 \newmdenv[
     linewidth=0,
     backgroundcolor = yellow!20!red!10,
     innertopmargin = \topskip,
-    innerbottommargin = \topskip
+    innerbottommargin = \topskip,
+    splittopskip = 2\topsep
 ]{conj}
 
 \newcommand{\dq}[4][]{``#2"#1 \cite[#4]{#3}.}
@@ -256,6 +260,7 @@ Although bridge number and the number of bridges are quite different, the two wo
 
 \paragraph{\textbf{Proof of 1}} For every knot $K$, there exists a projection with a minimal number of crossings, $c(K)$. Because each crossing must, by definition, have an overstrand and an understrand, there are $c(K)$ opportunities for distinct bridges. Thus, each crossing contributes at most one bridge to $b(K)$. Therefore, $b(K)$ cannot exceed $c(K)$.
 \qed
+\newpage
 \paragraph{\textbf{Proof of 2}} Consider alternating and nonalternating knots separately.
 
 \begin{figure}[h!]
@@ -1444,7 +1449,15 @@ Section \ref{sss:evidence} introduced three techniques for finding projections w
 The first technique introduced was the aptly named killzone. This procedure will not be discussed at length here since it and two of its derivatives (the superior and ideal killzone) have already been given formal definitions. Suffice to say generating the killzone is a perfectly legal way to manipulate a projection because a Dowker reconstruction and the original projection can be interconverted via a planar isotropy.\par
 The two moves used to actually remove bridges will be explored at length. Since their definitions will be based in the Reidemeister moves, those will presently be defined.\par
 
-\begin{figure}[h!]
+\begin{defi}
+    \begin{description}
+        \item[Type I Reidemeister move] \hfill \\ \dq{Put in or take out a twist in the knot}{bib:knotbook}{13}
+        \item[Type II Reidemeister move] \hfill \\ \dq{Either add two crossings or remove two crossings}{bib:knotbook}{13}
+        \item[Type III Reidemeister move] \hfill \\ \dq{Slide a strand of the knot from one side of a crossing to the other side of the crossing}{bib:knotbook}{13}
+    \end{description}
+\end{defi}
+
+\begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.6\linewidth}
         \centering
@@ -1717,19 +1730,10 @@ The two moves used to actually remove bridges will be explored at length. Since 
     \caption{The Reidemeister moves.}
     \label{fig:reidem}
 \end{figure}
-\newpage
-
-\begin{defi}
-    \begin{description}
-        \item[Type I Reidemeister move] \hfill \\ \dq{Put in or take out a twist in the knot}{bib:knotbook}{13}
-        \item[Type II Reidemeister move] \hfill \\ \dq{Either add two crossings or remove two crossings}{bib:knotbook}{13}
-        \item[Type III Reidemeister move] \hfill \\ \dq{Slide a strand of the knot from one side of a crossing to the other side of the crossing}{bib:knotbook}{13}
-    \end{description}
-\end{defi}
 
 In 1926, Kurt Reidemeister proved that two projections of the same knot can be interconverted using only the Reidemeister moves (see Figure \ref{fig:reidem}) and planar isotropies. Furthermore, Reidemeister moves are legal (transformations that do not change a projection of one knot into that of a different, distinct knot). Therefore, if the two moves used to remove bridges above are legal moves, there should be a sequence of Reidemeister moves that sums to them. First, however, define these "bridging moves" as follows.\par
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.8\linewidth}
         \centering
@@ -2096,7 +2100,7 @@ In both Section \ref{sss:applications} and \ref{sss:bridging}, two-bridge knots 
     \label{fig:810Dowker}
 \end{figure}
 
-\begin{table}[h!]
+\begin{table}[H]
     \centering
     \begin{tabular}{cccccccc}
         12 & 13 & 16 & 9 & 10 & 11 & 14 & 15\\
@@ -2484,7 +2488,7 @@ In knots of increasing complexity, $n$-sets become critical tools for reducing t
 
 To finish, perform two 2-sets on the \textcolor{blue}{blue} and \textcolor{pux}{purple} strands to yield Figure \ref{fig:810fin}. Because $b(8_{10})=3$, Figure \ref{fig:810fin} is a minimal-bridge projection.\par
 Using three Type I bridging moves, two Type II bridging moves, and two 2-sets (seven total distinct transformations), five bridges were removed. Although Figure \ref{fig:810fin} is not in any way "clean," it is a systematically discoverable projection of $8_{10}$ with only three bridges.
-\newpage
+\clearpage
 
 
 
