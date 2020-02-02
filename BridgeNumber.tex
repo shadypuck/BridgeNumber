@@ -54,6 +54,16 @@
     \end{flushright}
 }
 
+\newenvironment{bibcomment}{
+    \item[]
+    \begingroup
+    \par
+    \parshape0
+}{
+    \par
+    \endgroup
+}
+
 \title{Meditations on Bridge Number}
 \author{Steven Labalme}
 \date{\today}
@@ -2568,8 +2578,31 @@ This conjecture implies that while the bridging moves \emph{can} (as implied by 
 
 
 
-\bibliography{BridgeNumber}
-\bibliographystyle{apalike}
+\begin{thebibliography}{1}
+    \bibitem[Adams, 2004]{bib:knotbook}
+    Adams,~C.~C.~(2004).
+    \newblock \emph{The Knot Book: An Elementary Introduction to the Mathematical Theory of Knots.}
+    \newblock American Mathematical Society, 201 Charles Street, Providence, Rhode Island 02904-2294, reprinted edition.
+
+    \begin{bibcomment}
+        \setlength{\leftskip}{1cm}
+        Colin Adams is an actively researching knot theorist and author. He has been a professor at Williams College for several decades and teaches, among other classes, a one-semester course in elementary knot theory that uses this text as the textbook. Over his summers, he participates in the SMALL Undergraduate Research Project at Williams College, during which he has proved several theorems in knot theory with visiting students and was inspired to write this book.\par
+        \hspace{1em}\emph{The Knot Book} is a highly regarded work. It cherry-picks topics in knot theory, a subfield of mathematical topology only briefly touched upon in upper-level undergraduate courses at most institutions, that may be understood without the usual background in analysis, group theory, set theory, etc. Beginning with such basic definitions as that of a knot and link, it progresses to review knot notations, invariants, types, polynomials, and applications.\par
+        \hspace{1em}As the basis of the entirety of my research, \emph{The Knot Book} plays a central role in determining the ideas discussed in this paper. It is quoted on numerous occasions, especially for the purpose of precisely defining certain terms or wording the theorems that I prove. This paper diverges from \emph{The Knot Book} starting with Section 2, where it stops reviewing prior knowledge and begins developing its own theory. Section 3 bears no thematic connection to \emph{The Knot Book}, except, of course, for the underlying tenets of knot theory.\par
+    \end{bibcomment}
+
+    \bibitem[Labalme, 2020]{bib:knotnotes}
+    Labalme,~S.~(2020).
+    \newblock The knot book: Notes.
+    \newblock \url{https://github.com/shadypuck/knotnotes}. Accessed: 2020-02-01.
+
+    \begin{bibcomment}
+        \setlength{\leftskip}{1cm}
+        Although I wrote this source in its entirety, the majority of its ideas come from \emph{The Knot Book}. The exceptions would be my responses to the exercises in \emph{The Knot Book}, which I selected and completed as I read.\par
+        \hspace{1em}This source, consisting of 113 pages of typed notes, was composed over the first semester of my senior year of high school, during which I completed an independent study in knot theory. It breaks down and rephrases key ideas from \emph{The Knot Book} and was created to aid in my understanding of the text. Definitions and ideas that were worded extremely well are quoted, and important ideas that were only abstractly referenced are distilled into content.\par
+        \hspace{1em}As I wrote this paper, I found some of the phrasings from my notes to be especially clear. Additionally, since a number of these phrasings are paraphrases from \emph{The Knot Book}, citing my notes allows me to reference ideas and wordings from \emph{The Knot Book} without a surfeit of ellipses and brackets. Lastly, the process of creating it allowed me to practice typesetting in LaTeX, which I knew would be helpful in creating papers such as this one.
+    \end{bibcomment}
+\end{thebibliography}
 
 \noindent All figures are my own designs, created in Ti\emph{k}Z with style influenced by \cite{bib:knotbook}. The color-coding for the definition and theorem boxes was inspired by Sheldon Axler's \emph{Linear Algebra Done Right}.
 
