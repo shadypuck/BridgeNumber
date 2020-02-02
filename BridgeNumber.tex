@@ -10,15 +10,21 @@
 \usepackage{mdframed}
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{float}
 
 \usetikzlibrary{knots,decorations.markings}
+
 \colorlet{grx}{green!50!black}
 \colorlet{pux}{red!50!blue}
 \colorlet{gax}{black!50}
 \colorlet{ylx}{yellow!70!black}
 \colorlet{yly}{yellow!50!black}
 \colorlet{ylz}{yellow!80!black}
-\colorlet{max}{magenta!50}
+
+\tikzset{
+    verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
+    horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
+}
 
 \MakeOuterQuote{"}
 
@@ -79,16 +85,16 @@
 \begin{center}
     \section{Abstract}
 \end{center}
-Bridge number is a useful knot invariant for categorizing knots. More importantly, however, it distinguishes groups of knots and has been used in many proofs. Unfortunately, it can be very confusing.\par
-This paper begins by defining bridge number and proving some of its properties. Note that this paper primarily deals with alternating knots. The rest of the first section describes some important proofs that make use of bridge number. The second section --- the main focus of this paper --- is all about finding projections with the minimal number of bridges. The two simplest examples are presented to begin highlighting some useful techniques and laying a framework through inductive reasoning and pattern recognition. With the success of certain techniques used in these examples, the paper gives formal definitions of these techniques and proves that they are valid. These strategies are then applied to a difficult problem to show their utility. In the last section, several conjectures are presented that correspond to topics throughout the paper. However, they remain conjectures because they are beyond my (the author's) current ability to prove.\par
-Throughout this paper, important items will be placed in colored boxes. Blue boxes correspond to definitions, yellow boxes to theorems, and red boxes to conjectures. Please see \emph{The Knot Book: Notes} for additional background on any concepts throughout this paper \cite{bib:knotnotes}. Several specific sections will also be referenced throughout. If this document fails to clear up any issues, see \emph{The Knot Book} by Colin C. Adams \cite{bib:knotbook}. This book will also be quoted on several occasions and paraphrased or summarized (sometimes without a direct reference) on other occasions.
+Bridge number is a useful knot invariant for categorizing knots. More importantly, however, it appears in a number of places in knot theory and has been used in many proofs. Bridge number is interchangeably defined in two ways --- either (1) as the minimum number of maximal overpasses in any projection of the knot or (2) as the minimum number of unknotted, untangled arcs separated by a plane in any embedding of a knot in three-space (three-dimensional space). The second definition forms the basis of the standard method of determining bridge number, through a clever application of maxima and minima. This paper seeks to standardize the determination of bridge number using the first definition, revealing some curious and potentially powerful findings in the process.\par
+This paper begins by defining bridge number and proving some of its properties, with a focus on alternating knots. The rest of the first section describes some important proofs that make use of bridge number. The second section --- the main focus of this paper --- concerns finding projections with the minimal number of bridges. The two simplest examples are presented to begin highlighting some useful techniques and laying a framework through inductive reasoning and pattern recognition. With the success of certain techniques used in these examples, the paper gives formal definitions of these techniques and proves that they are valid. These strategies are then applied to a difficult problem to demonstrate their utility. In the last section, several conjectures are presented that provide a foundation for future research into the topics discussed herein.\par
+Throughout this paper, important items will be placed in colored boxes. Blue boxes correspond to definitions, yellow boxes to theorems, and red boxes to conjectures. Please see \emph{The Knot Book: Notes} for additional background on any concepts throughout this paper \cite{bib:knotnotes}. Also see \emph{The Knot Book} by Colin C. Adams \cite{bib:knotbook}. This book will also be quoted on several occasions and paraphrased or summarized (sometimes without a direct reference) on other occasions.
 \newpage
 
 
 
 \setcounter{secnumdepth}{3}
 \section{Introduction to Bridge Number}
-\subsection{Definitions and Elementary Properties}
+\subsection{Definitions and Elementary Properties}\label{sss:definitions}
 
 \begin{figure}[h!]
     \centering
@@ -157,7 +163,7 @@ Throughout this paper, important items will be placed in colored boxes. Blue box
 \end{figure}
 
 \noindent Although a knot, by definition, occupies three-dimensional space, knot theory often views them as two-dimensional projections. When the knot is "flattened" to draw a projection, knot theorists say that it lies in the projection plane. Even though crossings are inherently three-dimensional (one strand crossing over another necessitates depth), they are depicted such that the overstrand is continuous and the understrand is "broken," i.e., white space separates it from the overstrand. The idea of a projection allows for the development of knot invariants such as tricolorability. See Figure \ref{fig:unknota} for a projection of the unknot obeying the normal rules of projections.\par
-When considering bridge number, however, the knot is held to exist in overpasses and underpasses, which lie above and below the projection plane, respectively. These overpasses and underpasses are connected at their ends via vertices, which pass through the projection plane. In Figure \ref{fig:unknotb}, the thicker subarc is an overpass while the thinner subarc is an underpass$^[$\footnote{Note that the vertices' placement along the strand between crossings is entirely arbitrary, i.e., the understrand need not be substantially shorter than the overstrand, as depicted in Figure \ref{fig:unknotb}.}$^]$. They are connected at their ends by the orange vertices$^[$\footnote{Although most figures herein consider overpasses and underpasses, for simplicity's sake, not every subsequent projection will be drawn like Figure \ref{fig:unknotb}.}$^]$.\par
+When considering bridge number, however, the knot is held to exist in overpasses and underpasses, which lie above and below the projection plane, respectively. These overpasses and underpasses are connected at their ends via vertices, which pass through the projection plane. In Figure \ref{fig:unknotb}, the thicker subarc is an overpass while the thinner subarc is an underpass$^[$\footnote{Note that the vertices' placement along the strand between crossings is entirely arbitrary, i.e., the understrand need not be substantially shorter than the overstrand, as depicted in Figure \ref{fig:unknotb}.}$^]$. They are connected at their ends by the orange vertices$^[$\footnote{Although most figures herein contain overpasses and underpasses, for simplicity's sake, not every subsequent projection will be drawn like Figure \ref{fig:unknotb} (with thicker and thinner strands and vertices).}$^]$.\par
 
 \begin{figure}[h!]
     \centering
@@ -224,7 +230,7 @@ Now that the foundations of bridge number have been introduced, bridge number wi
 
 \begin{defi}
     \begin{description}
-        \item[Bridge number] \hfill \\ \dq{The least number of unknotted arcs lying above the [projection] plane in any projection of the knot. \emph{Symbolically represented by} $\bf{b(K)}$}{bib:knotnotes}{24}
+        \item[Bridge number] \hfill \\ \dq{The least number of unknotted arcs lying above the [projection] plane in any projection of the knot. \emph{Symbolically represented by} \textbf{\emph{b}(\emph{K})}}{bib:knotnotes}{25}
     \end{description}
 \end{defi}
 
@@ -238,7 +244,7 @@ Although bridge number and the number of bridges are quite different, the two wo
     \end{description}
 \end{theor}
 
-\paragraph{\textbf{Proof of 1}} For every knot, there exists a projection with a minimal number of crossings, $c(K)$. Because each crossing must, by definition, have an overstrand and an understrand, there are $c(K)$ opportunities for distinct bridges. Thus, each crossing contributes at most one bridge to $b(K)$. Therefore, $b(K)$ cannot exceed $c(K)$.
+\paragraph{\textbf{Proof of 1}} For every knot $K$, there exists a projection with a minimal number of crossings, $c(K)$. Because each crossing must, by definition, have an overstrand and an understrand, there are $c(K)$ opportunities for distinct bridges. Thus, each crossing contributes at most one bridge to $b(K)$. Therefore, $b(K)$ cannot exceed $c(K)$.
 \qed
 \paragraph{\textbf{Proof of 2}} Consider alternating and nonalternating knots separately.
 
@@ -296,22 +302,38 @@ Although bridge number and the number of bridges are quite different, the two wo
     \label{fig:2altern}
 \end{figure}
 
-\subparagraph{\textbf{Alternating Knots}} For every alternating knot, there exists a projection with a minimal number of crossings, $c(K)$. In this projection and by the definition of an alternating knot, sequential crossings will alternate (over, under, over, under,\dots). Because of this alternation and because $c(K)\geq 3$ for every alternating knot, there exists a region that can be drawn identical to Figure \ref{fig:2alterna}. In this region, there are three bridges that must be considered (\textcolor{grx}{green}, \textcolor{blue}{blue}, and \textcolor{pux}{purple}). The \textcolor{grx}{green} and \textcolor{blue}{blue} bridges will always be able to be combined by sliding the leftmost overstrand over the center understrand, as in Figure \ref{fig:2alternb}, reducing the number of bridges by 1. Note that although this move creates two new crossings, it creates no new bridges because the leftmost overstrand remains fully an overstrand and the middle understrand remains fully an understrand. Since at least 1 bridge can always be eliminated from the $c(K)$ projection (which originally has $c(K)$ bridges), $b(K)<c(K)$.
-\subparagraph{\textbf{Nonalternating Knots}} For every nonalternating knot, there exists a projection with a minimal number of crossings, $c(K)$. Because each crossing must, by definition, have an overstrand and an understrand, there are $c(K)$ opportunities for distinct bridges. However, since a nonalternating knot must, by definition, have at least one sequence of consecutive overstrands (and a matching sequence of consecutive understrands), at least one overpass and one underpass will span more than one crossing. Thus, at least two crossings must contribute to the same bridge at least once in a nonalternating knot. Therefore, $b(K)\leq c(K)-1\Rightarrow b(K)<c(K)$.
+\subparagraph{\textbf{Alternating Knots}} For every alternating knot $K$, there exists a projection with a minimal number of crossings, $c(K)$. In this projection and by the definition of an alternating knot, sequential crossings will alternate (over, under, over, under, \dots). Because of this alternation and because $c(K)\geq 3$ for every alternating knot, there exists a region that can be drawn identical to Figure \ref{fig:2alterna}. In this region, there are three bridges that must be considered (\textcolor{grx}{green}, \textcolor{blue}{blue}, and \textcolor{pux}{purple}). The \textcolor{grx}{green} and \textcolor{blue}{blue} bridges will always be able to be combined by sliding the leftmost overstrand over the center understrand, as in Figure \ref{fig:2alternb}, reducing the number of bridges by 1. Note that although this move creates two new crossings, it creates no new bridges because the leftmost overstrand remains fully an overstrand and the middle understrand remains fully an understrand. Since at least 1 bridge can always be eliminated from the projection with $c(K)$ crossings (which originally has $c(K)$ bridges), $b(K)<c(K)$.
+\subparagraph{\textbf{Nonalternating Knots}} For every nonalternating knot $K$, there exists a projection with a minimal number of crossings, $c(K)$. Because each crossing must, by definition, have an overstrand and an understrand, there are $c(K)$ opportunities for distinct bridges. However, since a nonalternating knot must, by definition, have at least one sequence of consecutive overstrands (and a matching sequence of consecutive understrands), at least one overpass and one underpass will span more than one crossing. Thus, at least two crossings must contribute to the same bridge at least once in a nonalternating knot. Therefore, $b(K)\leq c(K)-1\Rightarrow b(K)<c(K)$.
+\qed
+
+The previous two theorems together provide upper bounds on the bridge number of a nontrivial knot. In addition to them, there exists a lower bound on the bridge number of a nontrivial knot, as demonstrated by the theorem and proof below.
+
+\begin{theor}
+    \dq{If a knot has bridge number 1, it must be the unknot}{bib:knotbook}{65}
+\end{theor}
+
+\paragraph{Proof} If a knot has $b(K)=1$, it has at most one subarc that lies above the projection plane and at most one subarc that lies below the projection plane. These subarcs must be connected via vertices at either end. Assume that the projection plane is the $xy$-plane --- the knot will be considered in three-space in this proof.\par
+Choose one of the two vertices on the overpass and assign an orientation to the knot such that the next vertex encountered will be the one on the other end of the overpass. Assign the chosen vertex a $z$-value of $1$. Traversing the overpass, linearly decrease the $z$-value assigned to each point until arriving at the other vertex, which will be assigned a $z$-value of $0.1$. Assign a $z$-value of $-0.1$ to the vertex on the underpass corresponding to the $z=0.1$ vertex of the overpass. These two sides of the same vertex should be connected by a line. Traversing the underpass, linearly decrease the $z$-value assigned to each point until arriving at the other vertex, which will be assigned a $z$-value of $-1$. The $z=-1$ and $z=1$ vertices should be connected by a line. Viewed from the top, this will be exactly the same knot. However, owing to the constantly decreasing $z$-value, this knot will be a loop with no crossings when viewed from the side. From this side view, it is clear that the knot is a planar isotropy of the unknot, and, therefore, is the unknot.
 \qed
 
 
 \subsection{Applications}\label{sss:applications}
-As a knot invariant, bridge number is useful in distinguishing knots. However, there are some arguably more important applications of it. For instance, every two-bridge knot (literally a knot for which $b(K)=2$) is a rational knot (see Section 2.3 in \cite{bib:knotnotes}) and vice versa. Because the two-bridge/rational knots are a very well understood class of knots, theorems that are suspected to hold true for all knots are often first proved to hold true for the two-bridge knots.\par
-Furthermore, bridge number properties have been used to imply greater results. When attempting to prove that all rational knots are prime, Horst Schubert turned to bridge number. Instead of directly proving this fact, he proved the following.
+As a knot invariant, bridge number is useful in distinguishing knots. However, there are some arguably more important applications of it. For instance, it can be proved that every two-bridge knot (literally a knot for which $b(K)=2$) is a rational knot and vice versa. Because the two-bridge/rational knots are a very well understood class of knots, theorems that are suspected to hold true for all knots are often first proved to hold true for the two-bridge knots.\par
+Furthermore, properties of bridge number have been used to imply greater results. When attempting to prove that all rational knots are prime, H. Schubert turned to bridge number. Instead of directly proving this fact, he proved the following.
+
 \begin{equation*}
     b(K_1\#K_2) = b(K_1)+b(K_2)-1
 \end{equation*}
-Since a knot must have $b(K)\geq 2$ to be distinct from the unknot (see Section \ref{sss:bridging}), the lowest possible bridge numbers of two factor knots $K_1$ and $K_2$ are 2 and 2. Thus, by the above equation, $b(K)\geq 3$ for a composite knot. Therefore, since all rational knots have $b(K)=2$, no rational knot is composite, i.e., all rational knots are prime.\par
-Building off of this result, Claus Ernst and Dewitt Sumners proved a lower bound on the number of distinct prime knots of $n$ crossings. They did this by finding the following lower bound on the number of distinct two-bridge knots of $n$ crossings.
+
+Since a knot must have $b(K)\geq 2$ to be distinct from the unknot (see Section \ref{sss:bridging}), the lowest possible bridge numbers of two factor knots $K_1$ and $K_2$ are 2 and 2. Thus, by the above equation, $b(K)\geq 3$ for a composite knot. Since all rational knots have $b(K)=2$, no rational knot is composite. Therefore, all rational knots are prime.\par
+Building off of this result, Claus Ernst and Dewitt Sumners discovered a lower bound on the number of distinct prime knots of $n$ crossings. They did this by finding the following lower bound on the number of distinct two-bridge knots of $n$ crossings.
+
 \begin{equation*}
     \frac{2^{n-2}-1}{3}
 \end{equation*}
+
+In addition to primality, bridge number provides an upper bound on the minimal genus standardly embedded surface upon which a knot can be embedded without crossings. In other words, it can be proved that if an $n$-embeddable knot $K$ \dq[ $n\leq b(K)$]{can be placed on a genus $n$ standardly embedded surface without crossings [and] cannot be placed on any standardly embedded surface of lower genus without crossings,}{bib:knotbook}{114}\par
+Lastly, the idea of bridges has been used independently of bridge number. For example, J. W. Alexander proved that every knot or link has a closed braid representation by placing an axis between the overpasses and underpasses of a specifically constructed version of a knot.
 \newpage
 
 
@@ -340,9 +362,9 @@ Building off of this result, Claus Ernst and Dewitt Sumners proved a lower bound
     \label{fig:trefoil}
 \end{figure}
 
-\noindent When confronted with a standard projection of a knot, there are several immediate issues in reducing the number of bridges. Even with a knot as simple as the trefoil (Figure \ref{fig:trefoil}), the first issue may be its symmetry --- which of the three bridges should one try to eliminate since they're all the same shape, the same length, and in the same relative position? Eventually, the keen knot theorist may realize that this symmetry is not a roadblock; rather, it simply doesn't matter on which bridge one focuses.\par
-However, there is a way to single out bridges for elimination. Many knots (the trefoil is no exception) are routinely drawn in loopy, symmetrical, aesthetically pleasing projections that obscure the mathematical relationship between crossings. As such, redrawing a projection to concentrate crossings in an orderly fashion can reveal some of these relations. Fortunately, a simple method for doing so already exists: Dowker reconstructions.\par
-When one reconstructs a knot projection from its Dowker notation (see Section 2.2 in \cite{bib:knotnotes}), they create a line of crossings, each labeled with a Dowker pair. They will continue creating new crossings until they are forced to return to a previously drawn crossing. Thus, Dowker reconstructions often have every crossing in a rectangular region at the center of the projection while the strands connecting these crossings (which are not important in bridge number) loop around this region (see Figure \ref{fig:trefoilklzna}, which will subsequently be derived).\par
+\noindent When confronted with a standard projection of a knot, there are several immediate obstacles to reducing the number of bridges. Even with a knot as simple as the trefoil (Figure \ref{fig:trefoil}), the first issue may be its symmetry --- which of the three bridges should one try to eliminate since they're all the same shape, the same length, and in the same relative position? Eventually, the keen knot theorist may realize that this symmetry is not a roadblock; rather, it simply doesn't matter on which bridge one focuses.\par
+However, there is a way to single out bridges for elimination. Many knots (the trefoil is no exception) are routinely drawn in loopy, symmetrical, aesthetically pleasing projections that obfuscate the mathematical relationship between crossings. Accordingly, redrawing a projection to concentrate crossings in an orderly fashion can reveal some of these relations. Fortunately, a simple method for doing so already exists: Dowker reconstructions.\par
+When one reconstructs a knot projection from its Dowker notation (see Section 2.2 in \cite{bib:knotnotes}), they create a line of crossings, each labeled with a Dowker pair. They will continue creating new crossings until they are forced to return to a previously drawn crossing. Thus, Dowker reconstructions often have every crossing in a rectangular region at the center of the projection while the strands connecting these crossings (which are not important in bridge number) loop around this region (see Figure \ref{fig:trefoilreconc}, which will subsequently be derived).\par
 
 \begin{figure}[h!]
     \centering
@@ -380,7 +402,7 @@ When one reconstructs a knot projection from its Dowker notation (see Section 2.
     \label{fig:trefoilDowker}
 \end{figure}
 
-Let's find a Dowker reconstruction projection for the trefoil knot in Figure \ref{fig:trefoil}. Refer to Figure \ref{fig:trefoilDowker} throughout the following. Begin by assigning an orientation to the knot. Then arbitrarily choose a crossing (say, the upper-right one) and label it "1." Depart on the understrand and label every subsequent crossing with the next natural number until the original crossing is arrived at for the third time (do not label it with a third integer). At this point, each crossing has a pair of numbers, one even and one odd.\par
+Let's find a Dowker reconstruction projection for the trefoil knot in Figure \ref{fig:trefoil}. Refer to Figure \ref{fig:trefoilDowker} throughout the following. Begin by assigning an orientation to the knot. Then arbitrarily choose a crossing (say, the upper-right one) and label it "1." Depart on the understrand and label every subsequent crossing with the next natural number until the original crossing is arrived at for the third time (do not label it with a third integer). At this point, each crossing has a pair of numbers, one even and one odd$^[$\footnote{This assertion can be proved.}$^]$.\par
 
 \begin{table}[h!]
     \centering
@@ -479,7 +501,7 @@ Two versions of these pairings are shown in Table \ref{tab:trefoilDowker}. From 
     \label{fig:trefoilrecon}
 \end{figure}
 
-Draw a crossing with a horizontal understrand and vertical overstrand, as in Figure \ref{fig:trefoilrecona}, and label it with the pair, 1 4. This will be the first of three crossings that are drawn along the horizontal strand. The next two can either be drawn to the left or the right, so arbitrarily choose the right. Since this is an alternating knot, the crossings will alternate along the horizontal strand, as in Figure \ref{fig:trefoilreconb}. Also label the other crossings with their sequential pairs and assign the same orientation between the crossings as before. Notice how getting from crossing 1 to 2 requires leaving on the understrand, as was done in assigning the Dowker notation above. With the base strand drawn, continue through the rest of the crossings in numerical order, as in Figure \ref{fig:trefoilreconc}, before returning to the first crossing.\par
+Draw a crossing with a horizontal understrand and vertical overstrand, as in Figure \ref{fig:trefoilrecona}, and label it with the pair, 1 4. This is the first of three crossings to be drawn along the horizontal strand. The next two can either be drawn to the left or the right, so arbitrarily choose the right. Since this is an alternating knot, the crossings will alternate along the horizontal strand, as in Figure \ref{fig:trefoilreconb}. Also label the other crossings with their sequential pairs and assign the same orientation between the crossings as before. Notice how getting from crossing 1 to 2 requires leaving on the understrand, as was done in assigning the Dowker notation above. With the base strand drawn, continue through the rest of the crossings in numerical order, as in Figure \ref{fig:trefoilreconc}, before returning to the first crossing.\par
 
 \begin{figure}[h!]
     \centering
@@ -512,10 +534,7 @@ Draw a crossing with a horizontal understrand and vertical overstrand, as in Fig
     \end{subfigure}
     \begin{subfigure}[b]{0.3\linewidth}
         \centering
-        \begin{tikzpicture}[
-            verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-            horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-        ]
+        \begin{tikzpicture}
             \begin{knot}[
                 clip width=5,
                 consider self intersections
@@ -550,11 +569,11 @@ Draw a crossing with a horizontal understrand and vertical overstrand, as in Fig
     \label{fig:trefoilklzn}
 \end{figure}
 
-The final reconstruction in Figure \ref{fig:trefoilreconc} is particularly useful because of the killzone, a region previously alluded to as motivation for drawing the Dowker reconstruction. This area is illustrated in Figure \ref{fig:trefoilklzn} and defined$^[$\footnote{\label{fnt:credit}I conceived this region myself --- it is not something I have seen discussed elsewhere, though I would imagine that others have in different words.}$^]$ as follows.\par
+The final reconstruction in Figure \ref{fig:trefoilreconc} is particularly useful because of the killzone, a region previously alluded to as motivation for drawing the Dowker reconstruction. This area is illustrated in Figure \ref{fig:trefoilklzn} and defined as follows.\par
 
 \begin{defi}
     \begin{description}
-        \item[Killzone] \hfill \\ The small region of a Dowker reconstruction that encloses all crossings in a rectilinear polygon; all strands within are initially linear.
+        \item[Killzone] \hfill \\ The small region of a Dowker reconstruction that encloses all crossings in a rectilinear polygon; all crossings are arrayed along a grid.
     \end{description}
 \end{defi}
 
@@ -562,17 +581,14 @@ Technically, the killzone is the boxed-in region in Figure \ref{fig:trefoilklzna
 
 
 \subsubsection{Reducing the Number of Bridges in the Trefoil Knot}\label{ss2:trefoilreduce}
-With the killzone providing an orderly arrangement of crossings (Figure \ref{fig:trefoilklznb}), the issue of actually eliminating bridges arises. However, the solution can be found in the question, "how does one \emph{eliminate} a bridge?" Thinking about \emph{eliminating} bridges may lead to the thought process, "if the bridge going over crossing $x$ is the issue, how can I remove the crossing?" In a minimal-crossing projection, such as Figure \ref{fig:trefoilklznb}, obviously no crossing can be removed, and the budding knot theorist may become frustrated: "how can I remove bridges if I can't remove crossings?"\par
+With the killzone providing an orderly arrangement of crossings (see Figure \ref{fig:trefoilklznb}), the issue of actually eliminating bridges arises. However, the solution can be found in the question, "how does one \emph{eliminate} a bridge?" Thinking about \emph{eliminating} bridges may lead to the thought process, "if the bridge going over crossing $x$ is the issue, how can I remove the crossing?" In a minimal-crossing projection, such as Figure \ref{fig:trefoilklznb}, obviously no crossing can be removed, and the budding knot theorist may become frustrated: "how can I remove bridges if I can't remove crossings?"\par
 I have found that a simple change in wording can dramatically clarify the steps to reduce bridge number; instead of thinking about \emph{eliminating} bridges, think of \emph{combining} them. Search for ways to fuse two bridges by \emph{shifting} (not removing) the overstand(s) that separate(s) them.\par
 
 \begin{figure}[h!]
     \centering
     \begin{subfigure}[b]{0.3\linewidth}
         \centering
-        \begin{tikzpicture}[
-            verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-            horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-        ]
+        \begin{tikzpicture}
             \begin{knot}[
                 clip width=5,
                 consider self intersections,
@@ -612,10 +628,7 @@ I have found that a simple change in wording can dramatically clarify the steps 
     \end{subfigure}
     \begin{subfigure}[b]{0.3\linewidth}
         \centering
-        \begin{tikzpicture}[
-            verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-            horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-        ]
+        \begin{tikzpicture}
             \draw [help lines] (1.5,-2) -- (1.5,2) node[above,black]{$y$};
             \begin{knot}[
                 clip width=5,
@@ -659,14 +672,11 @@ I have found that a simple change in wording can dramatically clarify the steps 
     \label{fig:trefoilclr}
 \end{figure}
 
-Take the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges in Figure \ref{fig:trefoilclra}. What separates them is a segment of the third bridge (shaded \textcolor{ylx}{yellow} within the killzone). Now imagine this knot in three-dimensional space. Think of the left part of the \textcolor{ylx}{yellow} strand as depressing the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges' connection through the projection plane while the right part of the \textcolor{ylx}{yellow} strand lifts the \textcolor{blue}{blue} bridge above the projection plane. If one "pulls tight" the \textcolor{blue}{blue} bridge and the adjacent, straight part of the \textcolor{grx}{green} bridge, the \textcolor{ylx}{yellow} segment could "flip" $180^\circ$ about the $y$-axis, settling as in Figure \ref{fig:trefoilclrb}. This will not alter any strand outside of the killzone (the \textcolor{ylx}{yellow} part outside simply changes to its mirror image) and will combine the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges.\par
+Take the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges in Figure \ref{fig:trefoilclra}. What separates them is a segment of the third bridge (shaded \textcolor{ylx}{yellow} within the killzone). Now imagine this knot in three-space. Think of the left part of the \textcolor{ylx}{yellow} strand as depressing the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges' connection through the projection plane while the right part of the \textcolor{ylx}{yellow} strand lifts the \textcolor{blue}{blue} bridge above the projection plane. If one "pulls tight" the \textcolor{blue}{blue} bridge and the adjacent, straight part of the \textcolor{grx}{green} bridge while holding the ends of the \textcolor{ylx}{yellow} bridge steady, the \textcolor{ylx}{yellow} segment could "flip" $180^\circ$ about the $y$-axis, settling as in Figure \ref{fig:trefoilclrb}. This will not alter any strand outside of the killzone (the \textcolor{ylx}{yellow} part outside simply changes to its mirror image) and will combine the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges.\par
 
 \begin{figure}[h!]
     \centering
-    \begin{tikzpicture}[
-        verti/.style={black!50,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-        horiz/.style={black!50,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-    ]
+    \begin{tikzpicture}
         \begin{knot}[
             clip width=5,
             consider self intersections,
@@ -690,21 +700,18 @@ Take the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges in Figure \re
         \end{knot}
     \end{tikzpicture}
     \vspace{-0.8em}
-    \caption{A projection of the trefoil knot displaying $b(K)=2$.}
+    \caption{A projection of the trefoil knot with 2 bridges.}
     \label{fig:trefoilfin}
 \end{figure}
 
-Because $b(K)=2$ for the trefoil knot, Figure \ref{fig:trefoilclrb} is the minimal-bridge projection. This projection is cleaned up in Figure \ref{fig:trefoilfin}.
+Because $b(3_1)=2$, Figure \ref{fig:trefoilclrb} is a minimal-bridge projection. This projection is cleaned up in Figure \ref{fig:trefoilfin}.
 
 
 \subsubsection{The Ideal Killzone in the Figure-Eight Knot}
 
 \begin{figure}[h!]
     \centering
-    \begin{tikzpicture}[
-        verti/.style={black!50,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-        horiz/.style={black!50,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-    ]
+    \begin{tikzpicture}
         \begin{knot}[
             clip width=5,
             clip radius=3pt,
@@ -729,16 +736,13 @@ Because $b(K)=2$ for the trefoil knot, Figure \ref{fig:trefoilclrb} is the minim
 \end{figure}
 
 \noindent To avoid redundancy, the progression from Figure \ref{fig:fig8} to its Dowker reconstruction will not be as painstakingly detailed as the previous one. However, it will be used to highlight an important fact about the killzone.\par
-Before attacking the figure-eight knot, consider the labeling of the trefoil knot (Figure \ref{fig:trefoilDowker}). Note that there is only one way to Dowker-label the trefoil knot; because of the symmetry of the trefoil, starting at any crossing with any orientation leads to the same numbering$^[$\footnote{Imagine rotating Figure \ref{fig:trefoilDowker}, $120^\circ$ about an axis perpendicular to the projection plane. The projection would be entirely unchanged, but the numbering would have shifted one crossing. Another $120^\circ$ rotation would give the remaining possibility.}$^]$. In effect, the Dowker notation in Table \ref{tab:trefoilDowkera} is independent of the manner in which it is assigned.\par
+Before attacking the figure-eight knot, consider the labeling of the trefoil knot (Figure \ref{fig:trefoilDowker}). Note that there is only one way to Dowker-label the trefoil knot --- because of the symmetry of the trefoil, starting at any crossing with any orientation leads to the same numbering$^[$\footnote{Imagine rotating Figure \ref{fig:trefoilDowker} by $120^\circ$ about an axis perpendicular to the projection plane. The projection would be entirely unchanged, but the numbering would have shifted one crossing. Another $120^\circ$ rotation would give the remaining possibility.}$^]$. In effect, the Dowker notation in Table \ref{tab:trefoilDowkera} is independent of the manner in which it is assigned.\par
 
 \begin{figure}[h!]
     \centering
     \begin{subfigure}[b]{0.3\linewidth}
         \centering
-        \begin{tikzpicture}[
-            verti/.style={black!50,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-            horiz/.style={black!50,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-        ]
+        \begin{tikzpicture}
             \begin{knot}[
                 clip width=5,
                 clip radius=3pt,
@@ -779,10 +783,7 @@ Before attacking the figure-eight knot, consider the labeling of the trefoil kno
     \end{subfigure}
     \begin{subfigure}[b]{0.3\linewidth}
         \centering
-        \begin{tikzpicture}[
-            verti/.style={black!50,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-            horiz/.style={black!50,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-        ]
+        \begin{tikzpicture}
             \begin{knot}[
                 clip width=5,
                 clip radius=3pt,
@@ -999,7 +1000,7 @@ Reconstruct knot projections from the pairings in Table \ref{tab:fig8Dowker} to 
 \end{figure}
 
 Outlining the killzone in each, as in Figure \ref{fig:fig8klzn}, should make the difference fully apparent. While the killzone is rectangular in Figure \ref{fig:fig8klzna}, it is merely a rectilinear polygon in Figure \ref{fig:fig8klznb}. Because of the linearity of the killzone in Figure \ref{fig:fig8recona}, it is a superior starting projection for reducing bridge number.\par
-There was a way to tell, even from the get-go, that the Dowker labeling in Figure \ref{fig:fig8Dowkerb} was not the best. In Figure \ref{fig:fig8Dowkera}, each crossing is passed through once before being passed through again while in Figure \ref{fig:fig8Dowkerb}, only three crossings are passed through before revisiting a previous crossing. This may be obvious, but it is critical to understand the following theorem.
+There was a way to tell, even from the get-go, that the Dowker labeling in Figure \ref{fig:fig8Dowkerb} was not the best. In Figure \ref{fig:fig8Dowkera}, each crossing is passed through once before being passed through again while in Figure \ref{fig:fig8Dowkerb}, only three crossings are passed through before revisiting a previous crossing. This may be obvious, but it is critical to understand the following self-evident theorem.
 
 \begin{theor}
     The number of crossings traversed before returning to a previously numbered crossing when labeling is equal to the number of crossings on the base strand in the Dowker reconstruction.
@@ -1025,10 +1026,7 @@ The "flip" employed between Figure \ref{fig:trefoilclra} and \ref{fig:trefoilclr
     \centering
     \begin{subfigure}[b]{0.4\linewidth}
         \centering
-        \begin{tikzpicture}[
-            verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-            horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-        ]
+        \begin{tikzpicture}
             \begin{knot}[
                 clip width=5,
                 consider self intersections,
@@ -1075,10 +1073,7 @@ The "flip" employed between Figure \ref{fig:trefoilclra} and \ref{fig:trefoilclr
     \end{subfigure}
     \begin{subfigure}[b]{0.4\linewidth}
         \centering
-        \begin{tikzpicture}[
-            verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-            horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-        ]
+        \begin{tikzpicture}
             \begin{knot}[
                 clip width=5,
                 consider self intersections,
@@ -1127,10 +1122,7 @@ The "flip" employed between Figure \ref{fig:trefoilclra} and \ref{fig:trefoilclr
     \end{subfigure}
     \begin{subfigure}[b]{0.4\linewidth}
         \centering
-        \begin{tikzpicture}[
-            verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-            horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-        ]
+        \begin{tikzpicture}
             \begin{knot}[
                 clip width=5,
                 consider self intersections,
@@ -1178,10 +1170,7 @@ The "flip" employed between Figure \ref{fig:trefoilclra} and \ref{fig:trefoilclr
     \end{subfigure}
     \begin{subfigure}[b]{0.4\linewidth}
         \centering
-        \begin{tikzpicture}[
-            verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-            horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-        ]
+        \begin{tikzpicture}
             \begin{knot}[
                 clip width=5,
                 consider self intersections,
@@ -1248,10 +1237,7 @@ The reader may notice that every bridge removed thus far (one in Figure \ref{fig
 
 \begin{figure}[h!]
     \centering
-    \begin{tikzpicture}[
-        verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-        horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-    ]
+    \begin{tikzpicture}
         \begin{knot}[
             clip width=5,
             consider self intersections,
@@ -1302,7 +1288,7 @@ The reader may notice that every bridge removed thus far (one in Figure \ref{fig
     \label{fig:fig8clr-2}
 \end{figure}
 
-Proceeding with Figure \ref{fig:fig8clrd}, it should be clear that the move that has been used thus far cannot be used again (there are no more loops around the killzone that have not already been "flipped"). Therefore, a new move is needed. If we freeze the strands outside the killzone, as intended, imagine that the segments within can "wiggle around" a bit, distorting themselves at will via planar isotropies and moored only at either end by the dashes (killzone boundaries). In the course of their wiggling, one strand might pass over another crossing --- this is key. If the \textcolor{yly}{dark yellow} strand can "wiggle" past and over the top of the crossing to the right, as in Figure \ref{fig:fig8clr-2}, \emph{there will no longer be an understrand separating the \textcolor{grx}{green}/\textcolor{ylz}{light yellow} bridge and the \textcolor{red}{red} strand past the \textcolor{blue}{blue} bridge} and \emph{no new bridges will have been created}.\par
+Proceeding with Figure \ref{fig:fig8clrd}, it should be clear that the move that has been used thus far cannot be used again (there are no more loops around the killzone that have not already been "flipped"). Therefore, a new move is needed. If we freeze the strands outside the killzone, as intended, imagine that the segments within can "wiggle around" a bit, distorting themselves at will via planar isotropies and moored only at either end by the dashes (killzone boundaries). In the course of their wiggling, one strand might pass over another crossing --- this is key. If the \textcolor{yly}{dark yellow} strand can "wiggle" past and over the top of the crossing to the right, as in Figure \ref{fig:fig8clr-2}, \emph{there will no longer be an understrand (part of the \textcolor{ylz}{light yellow} bridge) separating the \textcolor{grx}{green} bridge and the \textcolor{red}{red} strand past the \textcolor{blue}{blue} bridge} and \emph{no new bridges will have been created}.\par
 
 \begin{figure}[h!]
     \centering
@@ -1339,24 +1325,21 @@ Proceeding with Figure \ref{fig:fig8clrd}, it should be clear that the move that
             \flipcrossings{1,2,3,4,5,10,11,12}
         \end{knot}
     \end{tikzpicture}
-    \caption{A projection of the figure-eight knot displaying $b(K)=2$.}
+    \caption{A projection of the figure-eight knot with 2 bridges.}
     \label{fig:fig8fin}
 \end{figure}
 
-Because $b(K)=2$ for the figure-eight knot, Figure \ref{fig:fig8clr-2} is the minimal-bridge projection. This projection is cleaned up in Figure \ref{fig:fig8fin}.
+Because $b(4_1)=2$, Figure \ref{fig:fig8clr-2} is a minimal-bridge projection. This projection is cleaned up in Figure \ref{fig:fig8fin}.
 
 
 \subsubsection{Reducing the Number of Bridges in the Trefoil Knot with the New Move}\label{ss2:trefoilreduce-2}
-The keen reader may have already noticed that the new move (the move introduced between Figure \ref{fig:fig8clrd} and \ref{fig:fig8clr-2}) is, in fact, not new. Rather, it made an earlier appearance between the two subfigures of Figure \ref{fig:2altern}. In addition, the region circled in \textcolor{cyan}{cyan} in Figure \ref{fig:2altern} has been seen since --- it is the complete killzone of the trefoil knot (see Figure \ref{fig:trefoilklzna}) and the left part of the killzone of the figure-eight knot (see Figure \ref{fig:fig8klzna}). Thus, by the Proof of 2's Alternating Knots section and experience with the figure-eight knot, the move in Figure \ref{fig:2altern} should be able to remove the one removable bridge in the trefoil knot and at least one of the removable bridges in the figure-eight knot. Let's see if this holds true.\par
+The keen reader may have already noticed that the new move (the move introduced between Figure \ref{fig:fig8clrd} and \ref{fig:fig8clr-2}) is, in fact, not new. Rather, it made an earlier appearance between the two subfigures of Figure \ref{fig:2altern}. In addition, the region circled in \textcolor{cyan}{cyan} in Figure \ref{fig:2altern} has been seen since --- it is the complete killzone of the trefoil knot (see Figure \ref{fig:trefoilklzna}) and the left part of the killzone of the figure-eight knot (see Figure \ref{fig:fig8klzna}). Thus, by the proof associated with Figure \ref{fig:2altern} and experience with the figure-eight knot, the move in Figure \ref{fig:2altern} should be able to remove the one removable bridge in the trefoil knot and at least one of the removable bridges in the figure-eight knot. Let's see if this holds true.\par
 
 \begin{figure}[h!]
     \centering
     \begin{subfigure}[b]{0.3\linewidth}
         \centering
-        \begin{tikzpicture}[
-            verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-            horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-        ]
+        \begin{tikzpicture}
             \begin{knot}[
                 clip width=5,
                 consider self intersections,
@@ -1396,10 +1379,7 @@ The keen reader may have already noticed that the new move (the move introduced 
     \end{subfigure}
     \begin{subfigure}[b]{0.3\linewidth}
         \centering
-        \begin{tikzpicture}[
-            verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-            horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-        ]
+        \begin{tikzpicture}
             \begin{knot}[
                 clip width=5,
                 consider self intersections,
@@ -1727,6 +1707,7 @@ The two moves used to actually remove bridges will be explored at length. Since 
     \caption{The Reidemeister moves.}
     \label{fig:reidem}
 \end{figure}
+\newpage
 
 \begin{defi}
     \begin{description}
@@ -1749,32 +1730,30 @@ In 1926, Kurt Reidemeister proved that two projections of the same knot can be i
                 \draw[very thick,-latex] (-0.4,0) -- (0.4,0);
                 \begin{knot}[
                     xshift=-1.8cm,
-                    every strand/.append style={red,thick},
                     clip width=5
                 ]
-                    \strand (-0.5,1.5)
+                    \strand [grx,thick] (-0.5,1.5) node[above,grx]{$a$}
                         to (-0.5,-1.2)
                         to [out=-90,in=-90] (0.5,-1.2)
                         to (0.5,1.5)
                     ;
-                    \strand (-1,0) to (1,0);
+                    \strand [red,thick] (-1,0) node[left,red]{$b$} to (1,0);
                     \flipcrossings{2}
                 \end{knot}
                 \begin{knot}[
                     xshift=1.8cm,
-                    every strand/.append style={red,thick},
                     clip width=5,
                     consider self intersections,
                     ignore endpoint intersections=false
                 ]
-                    \strand (-0.5,1.5)
+                    \strand [grx,thick] (-0.5,1.5)
                         to [out=-90,in=90] (0.5,0)
                         to (0.5,-1.2)
                         to [out=-90,in=-90] (-0.5,-1.2)
                         to (-0.5,0)
                         to [out=90,in=-90] (0.5,1.5)
                     ;
-                    \strand (-1,0) to (1,0);
+                    \strand [red,thick] (-1,0) to (1,0);
                     \flipcrossings{4,5}
                 \end{knot}
             \end{scope}
@@ -1785,32 +1764,30 @@ In 1926, Kurt Reidemeister proved that two projections of the same knot can be i
                 \draw[very thick,-latex] (-0.4,0) -- (0.4,0);
                 \begin{knot}[
                     xshift=-1.8cm,
-                    every strand/.append style={red,thick},
                     clip width=5
                 ]
-                    \strand (-0.5,1.5)
+                    \strand [grx,thick] (-0.5,1.5)
                         to (-0.5,-1.2)
                         to [out=-90,in=-90] (0.5,-1.2)
                         to (0.5,1.5)
                     ;
-                    \strand (-1,0) to (1,0);
+                    \strand [red,thick] (-1,0) to (1,0);
                     \flipcrossings{1}
                 \end{knot}
                 \begin{knot}[
                     xshift=1.8cm,
-                    every strand/.append style={red,thick},
                     clip width=5,
                     consider self intersections,
                     ignore endpoint intersections=false
                 ]
-                    \strand (-0.5,1.5)
+                    \strand [grx,thick] (-0.5,1.5)
                         to [out=-90,in=90] (0.5,0)
                         to (0.5,-1.2)
                         to [out=-90,in=-90] (-0.5,-1.2)
                         to (-0.5,0)
                         to [out=90,in=-90] (0.5,1.5)
                     ;
-                    \strand (-1,0) to (1,0);
+                    \strand [red,thick] (-1,0) to (1,0);
                     \flipcrossings{1,2,3}
                 \end{knot}
             \end{scope}
@@ -1825,30 +1802,28 @@ In 1926, Kurt Reidemeister proved that two projections of the same knot can be i
             \draw[very thick,-latex] (-0.4,0) -- (0.4,0);
             \begin{knot}[
                 xshift=-1.8cm,
-                every strand/.append style={red,thick},
                 clip width=5
             ]
-                \strand (-0.5,-1.5) to (-0.5,1.5);
-                \strand (0.5,-1.5) to (0.5,1.5);
-                \strand (-1,0) to (1,0);
+                \strand [grx,thick] (-0.5,-1.5) to (-0.5,1.5) node[above,grx]{$a$};
+                \strand [red,thick] (0.5,-1.5) to (0.5,1.5) node[above,red]{$b$};
+                \strand [red,thick] (-1,0) node[left,red]{$c$} to (1,0);
                 \flipcrossings{2}
             \end{knot}
             \begin{knot}[
                 xshift=1.8cm,
-                every strand/.append style={red,thick},
                 clip width=5,
                 clip radius=3pt,
                 ignore endpoint intersections=false
             ]
-                \strand (-0.5,-1.5)
+                \strand [grx,thick] (-0.5,-1.5)
                     to (-0.5,-0.7)
                     to [out=90,in=180] (0.6,-0.2)
                     to [out=0,in=0,looseness=2] (0.6,0.2)
                     to [out=180,in=-90] (-0.5,0.7)
                     to (-0.5,1.5)
                 ;
-                \strand (0.5,-1.5) to (0.5,1.5);
-                \strand (-1,0) to (1,0);
+                \strand [red,thick] (0.5,-1.5) to (0.5,1.5);
+                \strand [red,thick] (-1,0) to (1,0);
                 \flipcrossings{4}
             \end{knot}
         \end{tikzpicture}
@@ -1861,12 +1836,12 @@ In 1926, Kurt Reidemeister proved that two projections of the same knot can be i
 
 \begin{defi}
     \begin{description}
-        \item[Type I bridging move] \hfill \\ Given strand $a$ that passes over strand $b$ and then immediately passes under $b$ adjacent to the first crossing, flip $a$ over $b$ such that a new crossing is created and the original two crossings are inverted.
+        \item[Type I bridging move] \hfill \\ Given strand $a$ that passes over strand $b$ and then immediately passes under $b$ adjacent to the first crossing, flip $a$ over $b$ without shifting its endpoints such that a new crossing is created and the original two crossings are inverted.
         \item[Type II bridging move] \hfill \\ Given two parallel strands $a$ and $b$ that both intersect strand $c$ in sequential crossings where $a$ passes over $c$ and $b$ passes under $c$, pull the center of strand $a$ over the adjacent crossing without shifting its endpoints such that its crossing with $c$ is now on the opposite side of $b$ and two new crossings (intersections of $a$ and $b$) are created.
     \end{description}
 \end{defi}
 
-Note that unlike the Reidemeister moves, which can go in either direction as shown by the double-headed arrows in Figure \ref{fig:reidem}, the bridging moves flow in one, specific direction, as shown by the single-headed arrows in Figure \ref{fig:bridge}. This is because a reversal of direction would increase the number of bridges in many cases, which is not the desired result. Note also that if the strand $a$ is curved at the top as opposed to the bottom (notice the bottom curves in Figure \ref{fig:bridgea}), the transformation is still a Type I bridging move. The reason that such examples are not shown is because the components on both sides of the "OR" could be rotated $180^\circ$ about an axis through the page to show this. This rotation is simply a planar isotropy, and, thus, showing it would be unnecessarily redundant. Lastly, note that one could think of a Type II bridging move, as seen in Figure \ref{fig:bridgeb}, as pulling the understrand rather than the overstrand. Since both perspectives are interconvertible via planar isotropy, the overstrand is arbitrarily chosen to move.\par
+Note that unlike the Reidemeister moves, which can go in either direction as shown by the double-headed arrows in Figure \ref{fig:reidem}, the bridging moves flow in one, specific direction, as shown by the single-headed arrows in Figure \ref{fig:bridge}. This is because a reversal of direction would increase the number of bridges in many cases, which is not the desired result. Note also that if the strand $\color{grx}a$ is curved at the top as opposed to the bottom (notice the bottom curves in Figure \ref{fig:bridgea}), the transformation is still a Type I bridging move. The reason that such examples are not shown is because the components on both sides of the "OR" could be rotated $180^\circ$ about an axis perpendicular to the page to show this. This rotation is simply a planar isotropy, and, thus, showing it would be unnecessarily redundant. Lastly, note that one could think of a Type II bridging move, as seen in Figure \ref{fig:bridgeb}, as pulling the understrand rather than the overstrand. Since both perspectives are interconvertible via planar isotropy, the overstrand is arbitrarily chosen to move.\par
 
 \begin{figure}[h!]
     \centering
@@ -2036,21 +2011,13 @@ Note that unlike the Reidemeister moves, which can go in either direction as sho
 \end{figure}
 
 The sequences of Reidemeister moves in Figure \ref{fig:reidembridge} sum to the bridging moves. Therefore, the bridging moves are legal.\par
-Both of the bridging moves reduce the number of bridges in a projection by combining bridges, or moving inconvenient overstrands out of the way. They are also similar in the fact that they first create (a) new crossing(s) and then use a Type III Reidemeister move to "shift" one crossing along a strand to the opposite side of another$^[$\footnote{Note that it is always before and after the Type III Reidemeister move specifically that the number of bridges changes.}$^]$. In fact, the keen reader might realize that a Type I bridging move is really just a version of a Type II bridging move that is more applicable where two strands are concerned instead of three. In effect, given the leftmost setup in Figure \ref{fig:reidembridgea}, one could use a Type II bridging move and then a Type I Reidemeister move to arrive at the rightmost setup in Figure \ref{fig:reidembridgea}$^[$\footnote{Although Figure \ref{fig:trefoilcircle} uses a Type II bridging move while Figure \ref{fig:trefoilclr} uses a Type I bridging move, Figures \ref{fig:trefoilcircleb} and \ref{fig:trefoilclrb} are interconvertible via a Type I Reidemeister move.}$^]$. The reason for making a distinction at all is twofold. First, I find the Type I bridging move to be more intuitive than the Type II and I believe that the notion of "flipping" a loop really helps cement the idea of combining bridges by shifting the relationships between crossings. Second, the leftmost setup in Figure \ref{fig:reidembridgea} is very common in Dowker reconstructions. In that setup, Type I bridging moves lead to a "cleaner" resultant projection (one with less extraneous crossings).\par
+Both of the bridging moves reduce the number of bridges in a projection by combining bridges, or moving inconvenient overstrands out of the way. They are also similar in the fact that they first create (a) new crossing(s) and then use a Type III Reidemeister move to "shift" one crossing along a strand to the opposite side of another$^[$\footnote{Note that it is always before and after the Type III Reidemeister move, specifically, that the number of bridges changes.}$^]$. In fact, the keen reader might realize that a Type I bridging move is simply a version of a Type II bridging move applicable when two strands are concerned instead of three. In effect, given the leftmost setup in Figure \ref{fig:reidembridgea}, one could use a Type II bridging move and then a Type I Reidemeister move to arrive at the rightmost setup in Figure \ref{fig:reidembridgea}$^[$\footnote{Although Figure \ref{fig:trefoilcircle} uses a Type II bridging move and Figure \ref{fig:trefoilclr} uses a Type I bridging move, Figures \ref{fig:trefoilcircleb} and \ref{fig:trefoilclrb} are interconvertible via one Type I Reidemeister move.}$^]$. The reason for making a distinction at all is twofold. First, I find the Type I bridging move to be more intuitive than the Type II and I believe that the notion of "flipping" a loop really helps cement the idea of combining bridges by shifting the relationships between crossings. Second, the leftmost setup in Figure \ref{fig:reidembridgea} is very common in Dowker reconstructions. In that setup, Type I bridging moves lead to a "cleaner" resultant projection (one with less extraneous crossings).\par
 It is important to note that the bridging moves do not \emph{always} reduce the number of bridges by one; rather, they often do$^[$\footnote{For example, recall the debacle concerning Figure \ref{fig:fig8clr}.}$^]$. This observation is key --- while the bridging moves are combinations of Reidemeister moves that often reduce the number of bridges by combining bridges or moving obstructive crossings out of the way, they must still be applied with precision and cleverness to find the minimal-bridge projection.\par
-Perhaps the most significant application of the bridging moves is that they provide a way to \emph{prove} that a two-bridge knot is a two-bridge knot. Given a projection of a nontrivial knot, the bridging moves provide a speedy way to reduce the number of bridges. If only the bridging moves are used to reduce the number of bridges to two, then one has used legal moves to find a minimal-bridge projection. Therefore, $b(K)=2$ for the knot. The keen reader may ask, "why couldn't the knot still have $b(K)=1$?" In response to this question, I present the following theorem and proof.
-
-\begin{theor}
-    \dq{If a knot has bridge number 1, it must be the unknot}{bib:knotbook}{65}
-\end{theor}
-
-\paragraph{Proof} If a knot has $b(K)=1$, it has at most one subarc that lies above the projection plane and at most one subarc that lies below the projection plane. These subarcs must be connected via vertices at either end. Assume that the projection plane is the $xy$-plane --- the knot will be considered in three-dimensional space in this proof.\par
-Choose one of the two vertices on the overpass and assign an orientation to the knot such that the next vertex encountered will be the one on the other end of the overpass. Assign the chosen vertex a $z$-value of $1$. Traversing the overpass, linearly decrease the $z$-value assigned to each point until arriving at the other vertex, which will be assigned a $z$-value of $0.1$. Assign a $z$-value of $-0.1$ to the vertex on the underpass corresponding to the $z=0.1$ vertex of the overpass and connect the two with a line. Traversing the underpass, linearly decrease the $z$-value assigned to each point until arriving at the other vertex, which will be assigned a $z$-value of $-1$. Connect the $z=1$ and $z=-1$ vertices with a straight line. Viewed from the top, this will be exactly the same knot. However, owing to the constantly decreasing $z$-value, this knot will be a loop with no crossings when viewed from the side. From this side view, the knot is a planar isotropy of the unknot, and, therefore, is the unknot.
-\qed
+Perhaps the most significant application of the bridging moves is that they provide a way to \emph{prove} that a two-bridge knot is a two-bridge knot. Given a projection of a nontrivial knot, the bridging moves provide a speedy way to reduce the number of bridges. If only the bridging moves are used to reduce the number of bridges to two, then one has used only moves that do not alter the identity of the knot to find a minimal-bridge projection. Therefore, $b(K)=2$ for the knot. The keen reader may ask, "why couldn't the knot still have $b(K)=1$?" In response to this question, consider the last theorem in Section \ref{sss:definitions}, which, in proving that $b(K)\geq 2$ for a nontrivial knot, provides 2 as a lower bound on the bridge number of a nontrivial knot. Therefore, if a reduction using the bridging moves proves that $b(K)\leq 2$ for the nontrivial knot and the aforementioned theorem proves that $b(K)\geq 2$ for the nontrivial knot, $b(K)\leq 2 \cup b(K)\geq 2\Rightarrow b(K)=2$.
 
 
 \subsection{Utility and Applications}\label{sss:utility}
-As evidenced by Sections \ref{ss2:trefoilreduce}, \ref{ss2:fig8reduce}, and \ref{ss2:trefoilreduce-2}, the bridging moves are powerful tools for reducing the number of bridges in a knot projection. Their utility continues into more complex examples as well (see the treatment of $5_2$ in \emph{Exercise 3.11} of Section 3.2 of \cite{bib:knotnotes}). However, their applicability even extends beyond the bounds of the two-bridge knots.\par
+As evidenced by Sections \ref{ss2:trefoilreduce}, \ref{ss2:fig8reduce}, and \ref{ss2:trefoilreduce-2}, the bridging moves are powerful tools for reducing the number of bridges in a knot projection. Their utility continues into more complex examples as well without the need for further bridging moves (see the treatment of the $5_2$ knot in \emph{Exercise 3.11} of Section 3.2 of \cite{bib:knotnotes}). However, their applicability even extends beyond the bounds of the two-bridge knots.\par
 
 \begin{figure}[h!]
     \centering
@@ -2075,7 +2042,7 @@ As evidenced by Sections \ref{ss2:trefoilreduce}, \ref{ss2:fig8reduce}, and \ref
         \end{knot}
     \end{tikzpicture}
     \vspace{-1.5em}
-    \caption{The knot, $8_{10}$.}
+    \caption{The $8_{10}$ knot.}
     \label{fig:810}
 \end{figure}
 
@@ -2115,7 +2082,7 @@ In both Section \ref{sss:applications} and \ref{sss:bridging}, two-bridge knots 
         \end{knot}
     \end{tikzpicture}
     \vspace{-1.5em}
-    \caption{The knot, $8_{10}$, being labeled in Dowker notation.}
+    \caption{The $8_{10}$ knot being labeled in Dowker notation.}
     \label{fig:810Dowker}
 \end{figure}
 
@@ -2125,18 +2092,15 @@ In both Section \ref{sss:applications} and \ref{sss:bridging}, two-bridge knots 
         12 & 13 & 16 & 9 & 10 & 11 & 14 & 15\\
         1  & 2  & 3  & 4 & 5  & 6  & 7  & 8
     \end{tabular}
-    \caption{Dowker pairs for the knot, $8_{10}$.}
+    \caption{Dowker pairs for the $8_{10}$ knot.}
     \label{tab:810Dowker}
 \end{table}
 
-While $8_{10}$ appears scary at first, its superior killzone is actually ideal. Start assigning a Dowker labeling at the \textcolor{green}{light green} crossing and continue along the orientation given in Figure \ref{fig:810Dowker}. This will generate the labeling shown in Table \ref{tab:810Dowker}.\par
+While $8_{10}$ appears scary at first, its superior killzone is actually ideal. Start assigning a Dowker labeling at the \textcolor{green}{light green} crossing in Figure \ref{fig:810Dowker} and continue along the given orientation. This will generate the labeling shown in Table \ref{tab:810Dowker}.\par
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
-    \begin{tikzpicture}[
-        verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-        horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-    ]
+    \begin{tikzpicture}
         \begin{knot}[
             clip width=5,
             consider self intersections
@@ -2169,7 +2133,7 @@ While $8_{10}$ appears scary at first, its superior killzone is actually ideal. 
                 to [out=-90,in=-90] (0,-0.5)
                 to [out=90,in=180] cycle
             ;
-            \flipcrossings{1,3,5,7}
+            \flipcrossings{2,4,6,8}
         \end{knot}
         \node [verti] at (0.5,0) {};
         \node [horiz] at (9,0.5) {};
@@ -2180,36 +2144,29 @@ While $8_{10}$ appears scary at first, its superior killzone is actually ideal. 
         }
     \end{tikzpicture}
     \vspace{-0.8em}
-    \caption{A reconstruction of the knot, $8_{10}$.}
+    \caption{A reconstruction of the $8_{10}$ knot.}
     \label{fig:810recon}
 \end{figure}
 
-Reconstruct a knot projection from the pairings in Table \ref{tab:810Dowker} to yield Figure \ref{fig:810recon}$^[$\footnote{The alert reader will notice that the crossings are flipped from what they should be in a Dowker reconstruction based on Figure \ref{fig:810Dowker}. I made this error in my draft and have not changed it here both because of time considerations and because the example, as it stands, still highlights all of my key points.}$^]$. In this projection, there are four appealing opportunities for Type I bridging moves. However, since the middle two share a common strand, there are actually only three.\par
+Reconstruct a knot projection from the pairings in Table \ref{tab:810Dowker} to yield Figure \ref{fig:810recon}. In this projection, there are four appealing opportunities for Type I bridging moves. However, since the middle two share a common strand, there are actually only three.\par
 
 \begin{figure}[h!]
     \centering
-    \begin{tikzpicture}[
-        verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-        horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-    ]
+    \begin{tikzpicture}
         \def\h{1}
         \begin{knot}[
             clip width=5,
             consider self intersections,
             ignore endpoint intersections=false
         ]
-            \strand [red,thick] (0.5,0) to (3.5,0);
-            \strand [blue,thick] (3.5,0) to (4.5,0);
-            \strand [red,thick] (4.5,0)
+            \strand [red,thick] (0.5,0) to (5.5,0);
+            \strand [grx,thick] (5.5,0) to (6.5,0);
+            \strand [red,thick] (6.5,0)
                 to (8.5,0)
                 to [out=0,in=-90] (9,0.5)
                 to (9,\h)
                 to [out=90,in=90,looseness=0.5] (4,\h)
-            ;
-            \strand [grx,thick] (4,\h)
                 to [out=-90,in=90] (5,0)
-            ;
-            \strand [red,thick] (5,0)
                 to (5,-\h)
                 to [out=-90,in=-90] (4,-\h)
                 to (4,0)
@@ -2240,7 +2197,7 @@ Reconstruct a knot projection from the pairings in Table \ref{tab:810Dowker} to 
                 to (0,-0.5)
                 to [out=90,in=180] (0.5,0)
             ;
-            \flipcrossings{3,4,9,10,11,14,15,19,20}
+            \flipcrossings{3,4,5,6,9,12,13,16}
         \end{knot}
         \node [verti] at (0.5,0) {};
         \node [horiz] at (9,\h) {};
@@ -2249,60 +2206,48 @@ Reconstruct a knot projection from the pairings in Table \ref{tab:810Dowker} to 
                 \node [horiz] at (\x,\y) {};
             }
         }
-        \draw [orange,very thick,dashed] (6,0) circle (5mm);
     \end{tikzpicture}
     \vspace{-0.8em}
-    \caption{Combining bridges in the knot, $8_{10}$.}
+    \caption{Using Type I bridging moves on the $8_{10}$ knot.}
     \label{fig:810clr}
 \end{figure}
 
 To avoid an issue similar to the one associated with Figure \ref{fig:fig8clr}, choose loops that are as separated as possible. Therefore, perform three Type I bridging moves on the left, left-center, and right loops, respectively, of Figure \ref{fig:810recon} to yield Figure \ref{fig:810clr}. This new projection is already down from eight bridges to five.\par
-At this point, it is time for Type II bridging moves. Of the five bridges in Figure \ref{fig:810clr}, two are three-crossing bridges, two are two-crossing bridges, and one is a one-crossing bridge. Furthermore, no bridge has fewer than two overpasses separating it from its nearest neighbor. As with the figure-eight knot, it is preferable to work with a one-crossing bridge. However, with $8_{10}$ and unlike with the figure-eight knot, it is useful to consider how many overpasses separate the bridges when choosing with which one to work. Hence, the following.\par
+At this point, it is time for Type II bridging moves. Of the five bridges in Figure \ref{fig:810clr}, four are two-crossing bridges and one is a three-crossing bridge. As with the figure-eight knot, it is preferable to work with a one-crossing bridge (or the bridge with the fewest number of crossings). Unfortunately, due to the four-way tie, there is no immediate front runner for which two bridges to combine. However, there exists a certain pair of two-crossing bridges separated by only one overpass, and every other pair of adjacent bridges is separated by at least two overpasses. Thus, with $8_{10}$ and unlike with the figure-eight knot, it is useful to consider how many overpasses separate the bridges when choosing with which one to work. Hence, the following.\par
 
 \begin{conj}
     It is preferable to work with the bridge with the fewest overpasses separating it from the adjacent bridge.
 \end{conj}
 
 The Type II bridging move works by shifting an obstruction (a crossing of an overpass) out of the way. However, for every overpass between bridges, one Type II bridging move will be required. Therefore, the more overpasses between bridges, the more Type II bridging moves needed, and the "messier" the resultant projection.\par
-Therefore, choose the one-crossing bridge (circled in Figure \ref{fig:810clr}) and choose to move the \textcolor{grx}{green} and \textcolor{blue}{blue} subarcs. Since they are closer to the crossing in the one-crossing bridge than the subarcs on the other end, the resultant projection will be "cleaner," but the decision is, ultimately, arbitrary.\par
+Therefore, choose to move the \textcolor{grx}{green} subarc. Since it is closer to the crossings of the two-crossing bridge immediately to the left than to those of the other bridge, pull the \textcolor{grx}{green} subarc over the closer bridge. This decision will make the resultant projection "cleaner." Note, however, that the choice is ultimately arbitrary.\par
 
 \begin{figure}[h!]
     \centering
-    \begin{tikzpicture}[
-        verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-        horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-    ]
+    \begin{tikzpicture}
         \def\h{1.5}
         \begin{knot}[
             clip width=5,
-            clip radius=3pt,
             consider self intersections,
             ignore endpoint intersections=false
         ]
-            \strand [red,thick] (0.5,0) to (3.5,0);
-            \strand [blue,thick] (3.5,0)
-                to [out=0,in=-135] (4,{0.5*\h})
-                to [out=45,in=-90] (4.67,\h)
+            \strand [red,thick] (0.5,0) to (5.5,0);
+            \strand [grx,thick] (5.5,0)
+                to [out=0,in=-90,out looseness=0.6] (5.67,\h)
+                to [out=90,in=90] (5.33,\h)
+                to [out=-90,in=90] (4.33,0)
+                to [out=-90,in=-90,looseness=1.8] (3.67,0)
+                to [out=90,in=-90] (4.67,\h)
                 to [out=90,in=90] (6.33,\h)
-                to (6.33,0)
-                to [out=-90,in=-90,looseness=1.8] (5.67,0)
-                to [out=90,in=180,out looseness=2] (4.5,0)
+                to [out=-90,in=180,in looseness=0.6] (6.5,0)
             ;
-            \strand [red,thick] (4.5,0) to (7.5,0);
-            \strand [pux,thick] (7.5,0) to (8.5,0);
-            \strand [red,thick] (8.5,0)
+            \strand [blue,thick] (6.5,0) to (7.5,0);
+            \strand [red,thick] (7.5,0)
+                to (8.5,0)
                 to [out=0,in=-90] (9,0.5)
                 to (9,\h)
                 to [out=90,in=90] (4,\h)
-            ;
-            \strand [grx,thick] (4,\h)
-                to [out=-90,in=-90,looseness=2] (4.33,\h)
-                to [out=90,in=90] (6.67,\h)
-                to (6.67,0)
-                to [out=-90,in=-90,looseness=1.8] (5.33,0)
-                to [out=90,in=90, looseness=2] (5,0)
-            ;
-            \strand [red,thick] (5,0)
+                to [out=-90,in=90] (5,0)
                 to (5,-\h)
                 to [out=-90,in=-90] (4,-\h)
                 to (4,0)
@@ -2320,15 +2265,13 @@ Therefore, choose the one-crossing bridge (circled in Figure \ref{fig:810clr}) a
                 to [out=90,in=90] (11,\h)
                 to (11,-\h)
                 to [out=-90,in=-90] (7,-\h)
-                to [out=90,in=-90] (8,0)
+            ;
+            \strand [pux,thick] (7,-\h) to [out=90,in=-90] (8,0);
+            \strand [red,thick] (8,0)
                 to (8,\h)
                 to [out=90,in=90] (7,\h)
                 to (7,0)
-            ;
-            \strand [max,thick] (7,0)
                 to [out=-90,in=90] (8,-\h)
-            ;
-            \strand [red,thick] (8,-\h)
                 to [out=-90,in=-90] (10,-\h)
                 to (10,\h)
                 to [out=90,in=90] (3,\h)
@@ -2337,11 +2280,7 @@ Therefore, choose the one-crossing bridge (circled in Figure \ref{fig:810clr}) a
                 to (0,-0.5)
                 to [out=90,in=180] (0.5,0)
             ;
-            \flipcrossings{4,5,14,15,19,20,22,29,30}
-            \redraw{6}{(5.33,0)}
-            \redraw{3}{(5,0)}
-            \redraw{6}{(5,0)}
-            \redraw{7}{(5,0)}
+            \flipcrossings{2,3,4,5,8,9,10,11,14,23,24}
         \end{knot}
         \node [verti] at (0.5,0) {};
         \node [horiz] at (9,\h) {};
@@ -2350,17 +2289,19 @@ Therefore, choose the one-crossing bridge (circled in Figure \ref{fig:810clr}) a
                 \node [horiz] at (\x,\y) {};
             }
         }
-        \fill [white] (5.05,-0.03) rectangle (5.2,-0.2);
     \end{tikzpicture}
     \vspace{-0.8em}
-    \caption{Using a set of bridging moves in the knot, $8_{10}$.}
+    \caption{Using Type II bridging moves on the $8_{10}$ knot.}
     \label{fig:810clr-2}
 \end{figure}
 
-Perform two Type II bridging moves on the \textcolor{grx}{green} and \textcolor{blue}{blue} strands, respectively, to yield Figure \ref{fig:810clr-2}. Note that although these contortions may not resemble a Type II bridging move, they still are --- a Type II bridging move can be thought of as pulling a crossing along a \emph{twisting} path, not just a linear one.\par
-The idea of two Type II bridging moves working together is a new one. In fact, it warrants its own definition.\par
+Perform two Type II bridging moves on the \textcolor{grx}{green} strand to yield Figure \ref{fig:810clr-2}. Note that although these contortions may not resemble a Type II bridging move, they still are --- a Type II bridging move can be thought of as pulling a crossing along a \emph{twisting} path, not just a linear one.\par
+Additionally, consider why it is necessary to use \emph{two} Type II bridging moves. Should only one have been used, the two bridges would not have been combined; rather, a one-crossing bridge and another three-crossing bridge would take their place. To fully combine two bridges, it is necessary to move any obstructions \emph{all the way} out of the way.\par
+Before moving on, there is another interesting occurrence in Figure \ref{fig:810clr-2}. Where the \textcolor{grx}{green} subarc exits and enters the killzone, there are no dashes. This is intentional. While the dashes have been heretofore useful solely for blocking off the killzone, in increasingly complex examples such as $8_{10}$, they become more useful as consistent reference points between figures. Although the connections may change dramatically, the killzone dashes provide a consistent frame of reference that allows even a final projection to be firmly rooted in the original.\par
+At this point, the knot projection (Figure \ref{fig:810clr-2}) is down to four bridges: two two-crossing bridges, one four-crossing bridge, and one seven-crossing bridge. Choose to move the \textcolor{blue}{blue} \emph{and} \textcolor{pux}{purple} subarcs of Figure \ref{fig:810clr-2} because they are the overpasses separating the two two-crossing bridges.\par
+The idea of moving two strands with two synchronized Type II bridging moves is a new one. In fact, it warrants its own definition.\par
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \begin{tikzpicture}
         \draw[very thick,-latex] (-0.4,0) -- (0.4,0);
@@ -2401,26 +2342,21 @@ The idea of two Type II bridging moves working together is a new one. In fact, i
             \flipcrossings{7}
         \end{knot}
     \end{tikzpicture}
-    \caption{A set of two bridging moves.}
+    \caption{A 2-set.}
     \label{fig:set}
 \end{figure}
 
 \begin{defi}
     \begin{description}
-        \item[Set \textnormal{(of bridging moves)}] \hfill \\ Where $n\geq 2$, $n$ Type II bridging moves that reduce the number of bridges by shifting $n$ adjacent overpasses to the opposite side of the same crossing.
+        \item[\emph{n}-Set \textnormal{(of bridging moves)}] \hfill \\ Where $n\geq 2$, $n$ Type II bridging moves that shift $n$ adjacent overpasses to the opposite side of the same crossing.
     \end{description}
 \end{defi}
 
-In knots of increasing complexity, sets become critical tools in reducing the number of bridges. This comes as a direct result of the previously mentioned fact that in Figure \ref{fig:810clr}, no bridge has fewer than two overpasses separating it from its nearest neighbor.\par
-Before moving on, there is another interesting occurrence in Figure \ref{fig:810clr-2}. Where the \textcolor{grx}{green} and \textcolor{blue}{blue} subarcs exit and enter the killzone, there are no dashes. This is intentional. While the dashes are useful in Figure \ref{fig:810recon} for blocking off the killzone, they become more useful later as consistent reference points between figures. Although the connections may change dramatically, the killzone dashes provide a consistent frame of reference that allows even a final projection to be firmly rooted in the original.\par
-At this point, the knot projection (Figure \ref{fig:810clr-2}) is down to four bridges: two four-crossing bridges and two two-crossing bridges. Choose the \textcolor{max}{pink} and \textcolor{pux}{purple} subarcs because they are the overpasses separating the two two-crossing bridges.\par
+In knots of increasing complexity, $n$-sets become critical tools for reducing the number of bridges. The need for them arises here from the fact that in Figure \ref{fig:810clr-2}, no bridge has fewer than two overpasses separating it from its nearest neighbor.\par
 
 \begin{figure}[h!]
     \centering
-    \begin{tikzpicture}[
-        verti/.style={gax,fill,inner sep=0pt,minimum width=1.6pt,minimum height=2mm},
-        horiz/.style={gax,fill,inner sep=0pt,minimum width=2mm,minimum height=1.6pt}
-    ]
+    \begin{tikzpicture}
         \def\h{2}
         \begin{knot}[
             clip width=5,
@@ -2428,47 +2364,54 @@ At this point, the knot projection (Figure \ref{fig:810clr-2}) is down to four b
             consider self intersections,
             ignore endpoint intersections=false
         ]
-            \strand [red,thick] (0,0)
-                to (3.5,0)
-                to [out=0,in=-135] (4,{0.5*\h})
-                to [out=45,in=-90] (4.67,\h)
+            \strand [red,thick] (0.5,0)
+                to (5.5,0)
+                to [out=0,in=-90,out looseness=0.6] (5.67,\h)
+                to [out=90,in=90] (5.33,\h)
+                to [out=-90,in=90] (4.33,0)
+                to [out=-90,in=-90,looseness=1.8] (3.67,0)
+                to [out=90,in=-90] (4.67,\h)
                 to [out=90,in=90] (6.33,\h)
-                to (6.33,0)
-                to [out=-90,in=-90,looseness=1.8] (5.67,0)
-                to [out=90,in=180,out looseness=2] (4.5,0)
-                to (7.5,0)
+                to [out=-90,in=180,in looseness=0.6] (6.5,0)
             ;
-            \strand [pux,thick] (7.5,0)
-                to [out=0,in=90] (6.67,-\h)
-                to [out=-90,in=-90] (11.33,-\h)
-                to (11.33,\h)
-                to [out=90,in=90] (1.67,\h)
-                to [out=-90,in=90] (0.67,0)
-                to [out=-90,in=-90,looseness=1.8] (1.33,0)
-                to [out=90,in=-90] (2.33,\h)
-                to [out=90,in=90] (10.67,\h)
-                to (10.67,-\h)
-                to [out=-90,in=-90] (7.33,-\h)
-                to [out=90,in=-135] (8,{-0.5*\h})
-                to [out=45,in=180] (8.5,0)
+            \strand [blue,thick] (6.5,0)
+                to [out=0,in=120,out looseness=0.6] (7.1,{-0.5*\h})
+                to [out=-60,in=90] (7.67,-\h)
+                to [out=-90,in=-90] (10.33,-\h)
+                to (10.33,\h)
+                to [out=90,in=90] (2.67,\h)
+                to (2.67,-\h)
+                to [out=-90,in=-90] (-0.33,-\h)
+                to (-0.33,-1.17)
+                to [out=90,in=180] (0.5,-0.33)
+                to (1,-0.33)
+                to [out=0,in=0,looseness=1.8] (1,0.33)
+                to (0.5,0.33)
+                to [out=180,in=90] (-1,-1.17)
+                to (-1,-\h)
+                to [out=-90,in=-90] (3.33,-\h)
+                to [out=90,in=-90] (3.22,0)
+                to [out=90,in=-90] (3.33,\h)
+                to [out=90,in=90] (9.67,\h)
+                to (9.67,-\h)
+                to [out=-90,in=-90] (8.33,-\h)
+                to [out=90,in=-60] (7.9,{-0.5*\h})
+                to [out=120,in=180] (7.5,0)
             ;
-            \strand [red,thick] (8.5,0)
+            \strand [red,thick] (7.5,0)
+                to (8.5,0)
                 to [out=0,in=-90] (9,0.5)
                 to (9,\h)
                 to [out=90,in=90] (4,\h)
-                to [out=-90,in=-90,looseness=2] (4.33,\h)
-                to [out=90,in=90] (6.67,\h)
-                to (6.67,0)
-                to [out=-90,in=-90,looseness=1.8] (5.33,0)
-                to [out=90,in=90, looseness=2] (5,0)
+                to [out=-90,in=90] (5,0)
                 to (5,-\h)
                 to [out=-90,in=-90] (4,-\h)
                 to (4,0)
                 to [out=90,in=-90] (5,\h)
                 to [out=90,in=90] (6,\h)
                 to (6,-\h)
-                to [out=-90,in=-90,looseness=0.7] (-1.5,-\h)
-                to (-1.5,\h)
+                to [out=-90,in=-90,looseness=0.9] (-2,-\h)
+                to (-2,\h)
                 to [out=90,in=90] (1,\h)
                 to [out=-90,in=90] (2,0)
                 to (2,-\h)
@@ -2478,36 +2421,45 @@ At this point, the knot projection (Figure \ref{fig:810clr-2}) is down to four b
                 to [out=90,in=90] (11,\h)
                 to (11,-\h)
                 to [out=-90,in=-90] (7,-\h)
+            ;
+            \strand [pux,thick] (7,-\h)
+                to [out=90,in=90] (7.33,-\h)
+                to [out=-90,in=-90] (10.67,-\h)
+                to (10.67,\h)
+                to [out=90,in=90] (2.33,\h)
+                to (2.33,-\h)
+                to [out=-90,in=-90] (0,-\h)
+                to (0,-1.17)
+                to [out=90,in=180] (0.5,-0.67)
+                to (1,-0.67)
+                to [out=0,in=0,looseness=1.8] (1,0.67)
+                to (0.5,0.67)
+                to [out=180,in=90] (-1.33,-1.17)
+                to (-1.33,-\h)
+                to [out=-90,in=-90] (3.67,-\h)
+                to [out=90,in=-90] (3.44,0)
+                to [out=90,in=-90] (3.67,\h)
+                to [out=90,in=90] (9.33,\h)
+                to (9.33,-\h)
+                to [out=-90,in=-90] (8.67,-\h)
                 to [out=90,in=-90] (8,0)
+            ;
+            \strand [red,thick] (8,0)
                 to (8,\h)
                 to [out=90,in=90] (7,\h)
                 to (7,0)
-            ;
-            \strand [max,thick] (7,0)
-                to [out=-90,in=90] (6.33,-\h)
-                to [out=-90,in=-90] (11.67,-\h)
-                to (11.67,\h)
-                to [out=90,in=90] (1.33,\h)
-                to [out=-90,in=90] (0.33,0)
-                to [out=-90,in=-90,looseness=1.8] (1.67,0)
-                to [out=90,in=-90] (2.67,\h)
-                to [out=90,in=90] (10.33,\h)
-                to (10.33,-\h)
-                to [out=-90,in=-90] (7.67,-\h)
-                to [out=90,in=90,looseness=2] (8,-\h)
-            ;
-            \strand [red,thick] (8,-\h)
+                to [out=-90,in=90] (8,-\h)
                 to [out=-90,in=-90] (10,-\h)
                 to (10,\h)
                 to [out=90,in=90] (3,\h)
                 to (3,-\h)
-                to [out=-90,in=-90] (-0.5,-\h)
-                to (-0.5,-0.5)
-                to [out=90,in=180] (0,0)
+                to [out=-90,in=-90] (-0.67,-\h)
+                to (-0.67,-1.17)
+                to [out=90,in=180] (0.5,0)
             ;
-            \flipcrossings{1,2,3,4,7,8,9,10,12,22,23,24,25,26,27,28,29,35,36,37,38,39}
+            \flipcrossings{1,2,3,4,5,6,7,8,9,12,13,14,15,18,19,20,22,23,33,34,36,37,38}
         \end{knot}
-        \node [verti] at (0,0) {};
+        \node [verti] at (0.5,0) {};
         \node [horiz] at (9,\h) {};
         \foreach \x in {1,...,8} {
             \foreach \y in {-\h,\h} {
@@ -2516,33 +2468,33 @@ At this point, the knot projection (Figure \ref{fig:810clr-2}) is down to four b
         }
     \end{tikzpicture}
     \vspace{-0.8em}
-    \caption{A projection of the knot, $8_{10}$, displaying $b(K)=3$.}
+    \caption{A projection of the $8_{10}$ knot with 3 bridges.}
     \label{fig:810fin}
 \end{figure}
 
-To finish, perform two Type II bridging moves$^[$\footnote{A set!}$^]$ on the \textcolor{max}{pink} and \textcolor{pux}{purple} strands, respectively, to yield Figure \ref{fig:810fin}. Because $b(K)=3$ for $8_{10}$, Figure \ref{fig:810fin} is the minimal-bridge projection.\par
-Using three Type I bridging moves and two sets (five total distinct transformations), five bridges were removed. Although Figure \ref{fig:810fin} is not in any way "clean," it is an easy-to-find projection of $8_{10}$ with three bridges.
+To finish, perform two 2-sets on the \textcolor{blue}{blue} and \textcolor{pux}{purple} strands to yield Figure \ref{fig:810fin}. Because $b(8_{10})=3$, Figure \ref{fig:810fin} is a minimal-bridge projection.\par
+Using three Type I bridging moves, two Type II bridging moves, and two 2-sets (seven total distinct transformations), five bridges were removed. Although Figure \ref{fig:810fin} is not in any way "clean," it is a systematically discoverable projection of $8_{10}$ with only three bridges.
 \newpage
 
 
 
 \section{Conjectures}
-Speaking as the author, I enjoy writing papers like this that work their way through a series of *ahem* trivial proofs to reveal some cool insights. However, with that comes a healthy dose of humility as I realize that there are many things simply beyond my current ability to prove. Therefore, I include this section to list several related conjectures that I strongly suspect to be true, but that I cannot yet prove to be true. Each will be followed by a short explanation of my current reasoning.
+In the course of writing this paper, several further ideas concerning my new theory of bridging moves have occurred to me. As no immediately evident proof has presented itself to me, I include this section to list several related conjectures that I strongly suspect to be true, but that I cannot yet prove to be true. Each will be followed by a short explanation of my current reasoning.
 
 \begin{conj}
-    Given a minimal-crossing projection of an alternating knot, sequences of Type I and Type II bridging moves suffice to find a minimal-bridge projection.
+    Given a reduced projection of an alternating knot, sequences of Type I and Type II bridging moves suffice to find a minimal-bridge projection.
 \end{conj}
 
-Through the examples of the trefoil knot, figure-eight knot, and $8_{10}$, it has become clear that the bridging moves are powerful tools for reducing the number of bridges in a projection. However, every example so far has been an alternating knot already in a minimal-crossing projection, so these are important qualifiers.\par
-It may seem that this conjecture is really implying nothing --- if the bridging moves are composed of the Reidemeister moves, then isn't this conjecture arguing that the Reidemeister moves suffice to find a minimal projection (an obvious statement)? Wrong. The bridging moves are specific sequences of Reidemeister moves, so this conjecture implies (for example) that a Type I Reidemeister move would never need to be followed by a Type II Reidemeister move, a Type II Reidemeister move would never need to be followed by a Type I Reidemeister move, etc. Perhaps the main point of this conjecture is that there would never need to be such a thing as a Type III bridging move.\par
+Through the examples of the trefoil, figure-eight, and $8_{10}$ knots, it has become clear that the bridging moves are powerful tools for reducing the number of bridges in a projection. However, every example so far has been an alternating knot already in a minimal-crossing projection, so these are important qualifiers.\par
+It may seem that this conjecture is really implying nothing --- if the bridging moves are composed of the Reidemeister moves, then isn't this conjecture arguing that the Reidemeister moves suffice to find a minimal projection (an obvious statement)? Wrong. The bridging moves are specific sequences of Reidemeister moves, so this conjecture implies (for example) that a Type I Reidemeister move would never \emph{need} to be followed by a Type II Reidemeister move, a Type II Reidemeister move would never \emph{need} to be followed by a Type I Reidemeister move, etc. Perhaps the main point of this conjecture is that there would never be cause to define such a thing as a Type III bridging move.\par
 Since, as was previously mentioned, a Type I bridging move is really a special case of a Type II bridging move, I present the following, bolder conjecture.
 
 \begin{conj}
-    Given a minimal-crossing projection of an alternating knot, sequences of Type II bridging moves suffice to find a minimal-bridge projection.
+    Given a reduced projection of an alternating knot, sequences of Type II bridging moves suffice to find a minimal-bridge projection.
 \end{conj}
 
-This conjecture implies that a Type I Reidemeister move will never be necessary to find the minimal-bridge projection. Note that this conjecture still implies all that was stated above in the previous conjecture.\par
-Thinking through $8_{10}$ in Section \ref{sss:utility} has led to several revelations. First, I will define my concept$^[$\footnote{As in Footnote \ref{fnt:credit}, I have not seen this discussed elsewhere, but I would imagine that it has been.}$^]$ of being self-terminal.
+This conjecture implies that a Type I Reidemeister move will never be necessary to find the minimal-bridge projection. Note that this conjecture still implies all that was stated above in the previous conjecture. The implication would seem to make sense, as a Type I Reidemeister move only adds or removes extraneous crossings, which would already have been removed in a minimal-crossing projection of an alternating knot. However, it cannot be immediately ruled out that the bridging moves might generate an easily removed crossing (see Figure 3.9 in \cite{bib:knotnotes}) in the course of finding a minimal-bridge projection.\par
+Thinking through $8_{10}$ in Section \ref{sss:utility} has led to several revelations. First, I will define my concept of being self-terminal.
 
 \begin{figure}[h!]
     \centering
@@ -2582,15 +2534,15 @@ Thinking through $8_{10}$ in Section \ref{sss:utility} has led to several revela
     \end{description}
 \end{defi}
 
-In Figure \ref{fig:selfter}, the \textcolor{grx}{green} bridge corresponds to bridge $a$ from the definition while the \textcolor{blue}{blue} bridge corresponds to bridge $b$. The \textcolor{red}{red} horizontal line is just some other strand. Notice how both the \textcolor{red}{red} strand and bridge $a$ separate bridge $a$ from bridge $b$. Because bridge $a$ is one of the two separating strands, this end of bridge $a$ is self-terminal.\par
-Self-terminality has already played an important role. In choosing which direction to move the \textcolor{max}{pink} and \textcolor{pux}{purple} subarcs of Figure \ref{fig:810clr-2}, I suspect that I \emph{had} to move them in the direction that I did because the end on the other side of them was self-terminal. Furthermore, based on my observations of the nonlinear three-crossing bridge in Figure \ref{fig:810clr} (a self-terminal bridge), I conjecture the following.
+In Figure \ref{fig:selfter}, notice how both the \textcolor{red}{red} strand and bridge $\color{grx}a$ separate bridge $\color{grx}a$ from bridge $\color{blue}b$. Because bridge $\color{grx}a$ is one of the two separating strands, this end of bridge $\color{grx}a$ is self-terminal.\par
+Self-terminality has already played an important role. In choosing which direction to move the \textcolor{blue}{blue} and \textcolor{pux}{purple} subarcs of Figure \ref{fig:810clr-2}, I suspect that I \emph{had} to move them in the direction that I did because the end on the other side of them was self-terminal. Furthermore, based on my observations of the four-crossing and seven-crossing bridges in Figure \ref{fig:810clr-2}, I conjecture the following.
 
 \begin{conj}
     Self-terminal bridges cannot be combined with other bridges.
 \end{conj}
 
-A Type II bridging move works by shifting overpasses out of the way. If one of these overpasses is the bridge itself, then a recursive cycle has been created.\par
-The previous conjecture leads directly into the next one.
+A Type II bridging move works by shifting overpasses out of the way. If one of these overpasses is the bridge itself, then a recursive cycle has been created. As a second way of thinking about this, consider Figure \ref{fig:selfter}. While the horizontal \textcolor{red}{red} strand could be pulled down, around, and along bridge $\color{grx}a$ using a Type II bridging move, it would seem to be impossible to pull bridge $\color{grx}a$ along itself.\par
+The previous conjecture has a critical corollary, which follows.
 
 \begin{conj}
     If all bridges in a projection are self-terminal, then the projection is a minimal-bridge projection and $b(K)$ is equal to the number of bridges in that projection.
@@ -2600,10 +2552,10 @@ If this conjecture is true, a projection such as Figure \ref{fig:810fin} (where 
 Returning to the bridging moves, I conjecture the following.
 
 \begin{conj}
-    A knot is in its minimal-bridge projection if and only if all possible sets of bridging moves change its number of bridges by $0$ or $+1$.
+    A knot is in its minimal-bridge projection if and only if all possible bridging moves and $n$-sets change its number of bridges by $0$ or $+1$.
 \end{conj}
 
-In Figure \ref{fig:810fin}, it would appear that there are no further sets of bridging moves capable of reducing the number of bridges. I suspect that this observation should suffice as proof that $b(8_{10})=3$.\par
+In Figure \ref{fig:810fin}, it would appear that there are no bridging moves or $n$-sets capable of reducing the number of bridges. This would be difficult to verify, as there are many cases to consider, but I suspect that this observation should suffice as proof that $b(8_{10})=3$.\par
 This conjecture may again appear insignificant, but it inextricably ties bridge number to the bridging moves by suggesting that it is only when the bridging moves have no effect that a knot is in its minimal-bridge projection. Obviously, if a knot \emph{is} in its minimal-bridge projection, the bridging moves will have no effect, but this conjecture concerns the converse of that statement.\par
 I am undecided as to this last conjecture, but it would be nice if it were true. Bridging moves often add extraneous crossings and unnecessary loops. This is especially obvious in Figure \ref{fig:810fin}. To find a "cleaner" projection, these extraneous crossings can be "weeded out" of the minimal-bridge projection without increasing the number of bridges. This rather tedious process generates a "minimal-crossing minimal-bridge projection." Because of its tediousness, I conjecture the following.
 
@@ -2611,7 +2563,7 @@ I am undecided as to this last conjecture, but it would be nice if it were true.
     There is a simpler way to find a minimal-crossing minimal-bridge projection than by using the bridging moves and then eliminating extraneous crossings.
 \end{conj}
 
-This conjecture implies that while the bridging moves \emph{can} (as implied by the first conjecture) reduce the number of bridges to $b(K)$ and the Reidemeister moves \emph{can} then reduce the number of crossings to the fewest possible in a minimal-bridge projection, there exists some sort of hybrid method to accomplish both at the same time. Such a method would certainly be profound and would also be incredibly useful, but at least for now, the bridging moves stand as my best work.
+This conjecture implies that while the bridging moves \emph{can} (as implied by the first conjecture) reduce the number of bridges to $b(K)$ and the Reidemeister moves \emph{can} then reduce the number of crossings to the fewest possible in a minimal-bridge projection, there exists some sort of hybrid method to accomplish both at the same time. Such a method would certainly be profound and would also be incredibly useful, but at least for now, the bridging moves are the pinnacle of my meditations.
 \newpage
 
 
