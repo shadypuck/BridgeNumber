@@ -95,18 +95,18 @@
 \fancyhf{}
 \rfoot{Labalme \thepage}
 \renewcommand{\headrulewidth}{0pt}
-\setcounter{secnumdepth}{0}
 \begin{center}
+    \setcounter{secnumdepth}{0}
     \section{Abstract}
+    \setcounter{secnumdepth}{3}
 \end{center}
 Bridge number is a useful knot invariant for categorizing knots. More importantly, however, it appears in a number of places in knot theory and has been used in many proofs. Bridge number is interchangeably defined in two ways --- either (1) as the minimum number of maximal overpasses in any projection of the knot or (2) as the minimum number of unknotted, untangled arcs separated by a plane in any embedding of a knot in three-space (three-dimensional space). The second definition forms the basis of the standard method of determining bridge number, through a clever application of maxima and minima. This paper seeks to standardize the determination of bridge number using the first definition, revealing some curious and potentially powerful findings in the process.\par
-This paper begins by defining bridge number and proving some of its properties, with a focus on alternating knots. The rest of the first section describes some important proofs that make use of bridge number. The second section concerns finding projections with the minimal number of bridges. The two simplest examples are presented to begin highlighting some useful techniques and laying a framework through inductive reasoning and pattern recognition. With the success of certain techniques used in these examples, the paper gives formal definitions of these techniques and proves that they are valid. These strategies are then applied to a difficult problem to demonstrate their utility. In the last section, several conjectures are presented that provide a foundation for future research into the topics discussed herein.\par
+This paper begins by defining bridge number and proving some of its properties, with a focus on alternating knots. The rest of the first section describes some important proofs that make use of bridge number. The second section concerns finding projections with the minimal number of bridges. The two simplest examples highlight some useful techniques and lay a framework through inductive reasoning and pattern recognition. With the success of certain techniques used in these examples, the paper gives formal definitions of these techniques and proves that they are valid. These strategies are then applied to a more complex problem to demonstrate their utility. In the last section, several conjectures are presented that provide a foundation for future research into the topics discussed herein.\par
 Throughout this paper, important items will be placed in colored boxes. Blue boxes correspond to definitions, yellow boxes to theorems, and red boxes to conjectures. Please see \emph{The Knot Book: Notes} for additional background on any concepts throughout this paper \cite{bib:knotnotes}. Also see \emph{The Knot Book} by Colin C. Adams \cite{bib:knotbook}. This book will also be quoted on several occasions and paraphrased or summarized (sometimes without a direct reference) on other occasions.
 \newpage
 
 
 
-\setcounter{secnumdepth}{3}
 \section{Introduction to Bridge Number}
 \subsection{Definitions and Elementary Properties}\label{sss:definitions}
 
@@ -115,20 +115,9 @@ Throughout this paper, important items will be placed in colored boxes. Blue box
     \begin{subfigure}[b]{0.3\linewidth}
         \centering
         \begin{tikzpicture}
-            \begin{knot}[
-                clip width=5,
-                consider self intersections,
-                flip crossing=1
-            ]
-                \strand[red,thick] (-0.5,0.5)
-                    to (0.5,-0.5)
-                    arc [start angle=-135,end angle=135,radius=0.707cm] (0.5,0.5)
-                    to (-0.5,-0.5)
-                    arc [start angle=315,end angle=45,radius=0.707cm]
-                ;
-            \end{knot}
+            \draw [red,thick] circle (1cm);
         \end{tikzpicture}
-        \caption{A 2D projection.}
+        \caption{The standard projection.}
         \label{fig:unknota}
     \end{subfigure}
     \begin{subfigure}[b]{0.3\linewidth}
@@ -176,7 +165,7 @@ Throughout this paper, important items will be placed in colored boxes. Blue box
     \label{fig:unknot}
 \end{figure}
 
-\noindent Although a knot, by definition, occupies three-dimensional space, knot theory often views them as two-dimensional projections. When the knot is "flattened" to draw a projection, knot theorists say that it lies in the projection plane. Even though crossings are inherently three-dimensional (one strand crossing over another necessitates depth), they are depicted such that the overstrand is continuous and the understrand is "broken," i.e., white space separates it from the overstrand. The idea of a projection allows for the development of knot invariants such as tricolorability. See Figure \ref{fig:unknota} for a projection of the unknot obeying the normal rules of projections.\par
+\noindent Although a knot, by definition, occupies three-dimensional space, knot theory often views them as two-dimensional projections. When the knot is "flattened" to draw a projection, knot theorists say that it lies in the projection plane. Even though crossings are inherently three-dimensional (one strand crossing over another necessitates depth), they are depicted such that the overstrand is continuous and the understrand is "broken," i.e., white space separates it from the overstrand. The idea of a projection allows for the development of knot invariants such as tricolorability. See Figure \ref{fig:unknotc} for a projection of the unknot obeying the normal rules of projections.\par
 When considering bridge number, however, the knot is held to exist in overpasses and underpasses, which lie above and below the projection plane, respectively. These overpasses and underpasses are connected at their ends via vertices, which pass through the projection plane. In Figure \ref{fig:unknotb}, the thicker subarc is an overpass while the thinner subarc is an underpass$^[$\footnote{Note that the vertices' placement along the strand between crossings is entirely arbitrary, i.e., the understrand need not be substantially shorter than the overstrand, as depicted in Figure \ref{fig:unknotb}.}$^]$. They are connected at their ends by the orange vertices$^[$\footnote{Although most figures herein contain overpasses and underpasses, for simplicity's sake, not every subsequent projection will be drawn like Figure \ref{fig:unknotb} (with thicker and thinner strands and vertices).}$^]$.\par
 
 \begin{figure}[h!]
@@ -317,8 +306,8 @@ Although bridge number and the number of bridges are quite different, the two wo
     \label{fig:2altern}
 \end{figure}
 
-\subparagraph{\textbf{Alternating Knots}} For every alternating knot $K$, there exists a projection with a minimal number of crossings, $c(K)$. In this projection and by the definition of an alternating knot, sequential crossings will alternate (over, under, over, under, \dots). Because of this alternation and because $c(K)\geq 3$ for every alternating knot, there exists a region that can be drawn identical to Figure \ref{fig:2alterna}. In this region, there are three bridges that must be considered (\textcolor{grx}{green}, \textcolor{blue}{blue}, and \textcolor{pux}{purple}). The \textcolor{grx}{green} and \textcolor{blue}{blue} bridges will always be able to be combined by sliding the leftmost overstrand over the center understrand, as in Figure \ref{fig:2alternb}, reducing the number of bridges by 1. Note that although this move creates two new crossings, it creates no new bridges because the leftmost overstrand remains fully an overstrand and the middle understrand remains fully an understrand. Since at least 1 bridge can always be eliminated from the projection with $c(K)$ crossings (which originally has $c(K)$ bridges), $b(K)<c(K)$.
-\subparagraph{\textbf{Nonalternating Knots}} For every nonalternating knot $K$, there exists a projection with a minimal number of crossings, $c(K)$. Because each crossing must, by definition, have an overstrand and an understrand, there are $c(K)$ opportunities for distinct bridges. However, since a nonalternating knot must, by definition, have at least one sequence of consecutive overstrands (and a matching sequence of consecutive understrands), at least one overpass and one underpass will span more than one crossing. Thus, at least two crossings must contribute to the same bridge at least once in a nonalternating knot. Therefore, $b(K)\leq c(K)-1\Rightarrow b(K)<c(K)$.
+\subparagraph{\textbf{Alternating Knots}} For every alternating knot $K$, there exists a projection with its minimal number of crossings, $c(K)$. In this projection and by the definition of an alternating knot, sequential crossings will alternate (over, under, over, under, \dots). Because of this alternation and because $c(K)\geq 3$ for every alternating knot, there exists a region that can be drawn identical to Figure \ref{fig:2alterna}. In this region, there are three bridges that must be considered (\textcolor{grx}{green}, \textcolor{blue}{blue}, and \textcolor{pux}{purple}). The \textcolor{grx}{green} and \textcolor{blue}{blue} bridges will always be able to be combined by sliding the leftmost overstrand over the center understrand, as in Figure \ref{fig:2alternb}, reducing the number of bridges by 1. Note that although this move creates two new crossings, it creates no new bridges because the leftmost overstrand remains fully an overstrand and the middle understrand remains fully an understrand. Since at least 1 bridge can always be eliminated from the projection with $c(K)$ crossings (which originally has $c(K)$ bridges), $b(K)<c(K)$.
+\subparagraph{\textbf{Nonalternating Knots}} For every nonalternating knot $K$, there exists a projection with its minimal number of crossings, $c(K)$. Because each crossing must, by definition, have an overstrand and an understrand, there are $c(K)$ opportunities for distinct bridges. However, since a nonalternating knot must, by definition, have at least one sequence of consecutive overstrands (and a matching sequence of consecutive understrands), at least one overpass and one underpass will span more than one crossing. Thus, at least two crossings must contribute to the same bridge at least once in a nonalternating knot. Therefore, $b(K)\leq c(K)-1\Rightarrow b(K)<c(K)$.
 \qed
 
 The previous two theorems together provide upper bounds on the bridge number of a nontrivial knot. In addition to them, there exists a lower bound on the bridge number of a nontrivial knot, as demonstrated by the theorem and proof below.
@@ -327,13 +316,13 @@ The previous two theorems together provide upper bounds on the bridge number of 
     \dq{If a knot has bridge number 1, it must be the unknot}{bib:knotbook}{65}
 \end{theor}
 
-\paragraph{Proof} If a knot has $b(K)=1$, it has at most one subarc that lies above the projection plane and at most one subarc that lies below the projection plane. These subarcs must be connected via vertices at either end. Assume that the projection plane is the $xy$-plane --- the knot will be considered in three-space in this proof.\par
-Choose one of the two vertices on the overpass and assign an orientation to the knot such that the next vertex encountered will be the one on the other end of the overpass. Assign the chosen vertex a $z$-value of $1$. Traversing the overpass, linearly decrease the $z$-value assigned to each point until arriving at the other vertex, which will be assigned a $z$-value of $0.1$. Assign a $z$-value of $-0.1$ to the vertex on the underpass corresponding to the $z=0.1$ vertex of the overpass. These two sides of the same vertex should be connected by a line. Traversing the underpass, linearly decrease the $z$-value assigned to each point until arriving at the other vertex, which will be assigned a $z$-value of $-1$. The $z=-1$ and $z=1$ vertices should be connected by a line. Viewed from the top, this will be exactly the same knot. However, owing to the constantly decreasing $z$-value, this knot will be a loop with no crossings when viewed from the side. From this side view, it is clear that the knot is a planar isotropy of the unknot, and, therefore, is the unknot.
+\paragraph{Proof} If a knot has $b(K)=1$, there exists an embedding of it with at most one subarc lying above the projection plane and at most one subarc lying below the projection plane. These subarcs must be connected via vertices at either end. Assume that the projection plane is the $xy$-plane --- the knot will be considered in three-space in this proof.\par
+Choose one of the two vertices on the overpass and assign an orientation to the knot such that the next vertex encountered will be the one on the other end of the overpass. Assign the chosen vertex a $z$-value of $1$. Traversing the overpass, linearly decrease the $z$-value assigned to each point until arriving at the other vertex, which will be assigned a $z$-value of $0.1$. Assign a $z$-value of $-0.1$ to the vertex on the underpass corresponding to the $z=0.1$ vertex of the overpass. These two sides of the same vertex should be connected by a line. Traversing the underpass, linearly decrease the $z$-value assigned to each point until arriving at the other vertex, which will be assigned a $z$-value of $-1$. The $z=-1$ and $z=1$ vertices should be connected by a line. Viewed from the top, this will be exactly the same knot. However, owing to the constantly decreasing $z$-value, this knot will be a loop with no crossings when viewed from the side. From this side view, it is clear that the knot is a planar isotropy of the unknot (a distortion of Figure \ref{fig:unknota}), and, therefore, is the unknot.
 \qed
 
 
 \subsection{Applications}\label{sss:applications}
-As a knot invariant, bridge number is useful in distinguishing knots. However, there are some arguably more important applications of it. For instance, it can be proved that every two-bridge knot (literally a knot for which $b(K)=2$) is a rational knot and vice versa. Because the two-bridge/rational knots are a very well understood class of knots, theorems that are suspected to hold true for all knots are often first proved to hold true for the two-bridge knots.\par
+As a knot invariant, bridge number is useful in distinguishing knots. However, there are some arguably more important applications of it. For instance, it can be proven that every two-bridge knot (literally a knot for which $b(K)=2$) is a rational knot and vice versa. Because the two-bridge/rational knots are a very well understood class of knots, theorems that are suspected to hold true for all knots are often first proven to hold true for the two-bridge knots.\par
 Furthermore, properties of bridge number have been used to imply greater results. When attempting to prove that all rational knots are prime, H. Schubert turned to bridge number. Instead of directly proving this fact, he proved the following.
 
 \begin{equation*}
@@ -347,7 +336,7 @@ Building off of this result, Claus Ernst and Dewitt Sumners discovered a lower b
     \frac{2^{n-2}-1}{3}
 \end{equation*}
 
-In addition to primality, bridge number provides an upper bound on the minimal genus standardly embedded surface upon which a knot can be embedded without crossings. In other words, it can be proved that if an $n$-embeddable knot $K$ \dq[ $n\leq b(K)$]{can be placed on a genus $n$ standardly embedded surface without crossings [and] cannot be placed on any standardly embedded surface of lower genus without crossings,}{bib:knotbook}{114}\par
+In addition to primality, bridge number provides an upper bound on the minimal genus standardly embedded surface upon which a knot can be embedded without crossings. In other words, it can be proven that if an $n$-embeddable knot $K$ \dq[ $n\leq b(K)$]{can be placed on a genus $n$ standardly embedded surface without crossings [and] cannot be placed on any standardly embedded surface of lower genus without crossings,}{bib:knotbook}{114}\par
 Lastly, the idea of bridges has been used independently of bridge number. For example, J. W. Alexander proved that every knot or link has a closed braid representation by placing an axis between the overpasses and underpasses of a specifically constructed version of a knot.
 \newpage
 
@@ -417,7 +406,7 @@ When one reconstructs a knot projection from its Dowker notation (see \cite{bib:
     \label{fig:trefoilDowker}
 \end{figure}
 
-Let's find a Dowker reconstruction projection for the trefoil knot in Figure \ref{fig:trefoil}. Refer to Figure \ref{fig:trefoilDowker} throughout the following. Begin by assigning an orientation to the knot. Then arbitrarily choose a crossing (say, the upper-right one) and label it "1." Depart on the understrand and label every subsequent crossing with the next natural number until the original crossing is arrived at for the third time (do not label it with a third integer). At this point, each crossing has a pair of numbers, one even and one odd$^[$\footnote{This assertion can be proved.}$^]$.\par
+Let's find a Dowker reconstruction projection for the trefoil knot in Figure \ref{fig:trefoil}. Refer to Figure \ref{fig:trefoilDowker} throughout the following. Begin by assigning an orientation to the knot. Then arbitrarily choose a crossing (say, the upper-right one) and label it "1." Depart on the understrand and label every subsequent crossing with the next natural number until the original crossing is arrived at for the third time (do not label it with a third integer). At this point, each crossing has a pair of numbers, one even and one odd$^[$\footnote{This assertion can be proven.}$^]$.\par
 
 \begin{table}[h!]
     \centering
@@ -592,12 +581,12 @@ The final reconstruction in Figure \ref{fig:trefoilreconc} is particularly usefu
     \end{description}
 \end{defi}
 
-Technically, the killzone is the boxed-in region in Figure \ref{fig:trefoilklzna}. However, to avoid drawing this every time, each strand is dashed where it enters and where it exits the killzone, as in Figure \ref{fig:trefoilklznb}. The importance of the killzone is that since bridge number directly deals with the relationship between crossings, many moves that eliminate bridges can be performed entirely within the killzone.
+Technically, the killzone is the boxed-in region in Figure \ref{fig:trefoilklzna}. However, to avoid drawing this every time, each strand is dashed where it enters and where it exits the killzone, as in Figure \ref{fig:trefoilklznb}. The importance of the killzone is that since bridge number directly deals with the relationship between crossings, moves that eliminate bridges can often be performed entirely within the killzone.
 
 
 \subsubsection{Reducing the Number of Bridges in the Trefoil Knot}\label{ss2:trefoilreduce}
 With the killzone providing an orderly arrangement of crossings (see Figure \ref{fig:trefoilklznb}), the issue of actually eliminating bridges arises. However, the solution can be found in the question, "how does one \emph{eliminate} a bridge?" Thinking about \emph{eliminating} bridges may lead to the thought process, "if the bridge going over crossing $x$ is the issue, how can I remove the crossing?" In a minimal-crossing projection, such as Figure \ref{fig:trefoilklznb}, obviously no crossing can be removed, and the budding knot theorist may become frustrated: "how can I remove bridges if I can't remove crossings?"\par
-I have found that a simple change in wording can dramatically clarify the steps to reduce bridge number; instead of thinking about \emph{eliminating} bridges, think of \emph{combining} them. Search for ways to fuse two bridges by \emph{shifting} (not removing) the overstand(s) that separate(s) them.\par
+A simple change in wording can dramatically clarify the steps to reduce bridge number; instead of thinking about \emph{eliminating} bridges, think of \emph{combining} them. Search for ways to fuse two bridges by \emph{shifting} (not removing) the overstand(s) that separate(s) them.\par
 
 \begin{figure}[h!]
     \centering
@@ -687,7 +676,7 @@ I have found that a simple change in wording can dramatically clarify the steps 
     \label{fig:trefoilclr}
 \end{figure}
 
-Take the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges in Figure \ref{fig:trefoilclra}. What separates them is a segment of the third bridge (shaded \textcolor{ylx}{yellow} within the killzone). Now imagine this knot in three-space. Think of the left part of the \textcolor{ylx}{yellow} strand as depressing the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges' connection through the projection plane while the right part of the \textcolor{ylx}{yellow} strand lifts the \textcolor{blue}{blue} bridge above the projection plane. If one "pulls tight" the \textcolor{blue}{blue} bridge and the adjacent, straight part of the \textcolor{grx}{green} bridge while holding the ends of the \textcolor{ylx}{yellow} bridge steady, the \textcolor{ylx}{yellow} segment could "flip" $180^\circ$ about the $y$-axis, settling as in Figure \ref{fig:trefoilclrb}. This will not alter any strand outside of the killzone (the \textcolor{ylx}{yellow} part outside simply changes to its mirror image) and will combine the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges.\par
+Consider the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges in Figure \ref{fig:trefoilclra}. What separates them is a segment of the third bridge (shaded \textcolor{ylx}{yellow} within the killzone). Now imagine this knot in three-space. Think of the left part of the \textcolor{ylx}{yellow} strand as depressing the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges' connection through the projection plane while the right part of the \textcolor{ylx}{yellow} strand lifts the \textcolor{blue}{blue} bridge above the projection plane. If one "grabs" the curved part of the \textcolor{ylx}{yellow} bridge in their hand and rotates said hand $180^\circ$ clockwise about the $y$-axis while holding the ends of the \textcolor{ylx}{yellow} bridge steady, it could "flip" around, settling as in Figure \ref{fig:trefoilclrb}. Now the left part of the \textcolor{ylx}{yellow} strand lifts the corresponding part of the \textcolor{grx}{green} bridge above the projection plane while the right part depresses its corresponding bit through the projection plane. This will not alter any strand outside of the killzone (the \textcolor{ylx}{yellow} part outside simply changes to its mirror image) and will combine the \textcolor{grx}{green} and \textcolor{blue}{blue} bridges.\par
 
 \begin{figure}[h!]
     \centering
@@ -1248,7 +1237,7 @@ Let's justify the previous assertion in two parts as follows.
     \end{enumerate}
 \end{conj}
 
-Notably, every bridge removed thus far (one in Figure \ref{fig:trefoilclr} and one in Figure \ref{fig:fig8clr}) has been a one-crossing bridge (literally a bridge that spans only one crossing). Logically, because there is only one crossing beneath a one-crossing bridge, it requires less work to shift that crossing. Likewise, every bridge removed thus far has been contained entirely within the killzone. By the definition of the killzone, all strands are in a small, organized region, thereby clarifying the relationship between a knot's key elements.
+Notably, every bridge removed thus far (one in Figure \ref{fig:trefoilclr} and one in Figure \ref{fig:fig8clr}) has been a one-crossing bridge (literally a bridge that spans only one crossing). Logically, because there is only one crossing beneath a one-crossing bridge, a cleaner projection results from shifting that crossing. Likewise, every bridge removed thus far has been contained entirely within the killzone. By the definition of the killzone, all strands are in a small, organized region, thereby clarifying the relationship between a knot's key elements.
 
 \begin{figure}[h!]
     \centering
@@ -1352,7 +1341,7 @@ Note that the new move (the move introduced between Figure \ref{fig:fig8clrd} an
 
 \begin{figure}[h!]
     \centering
-    \begin{subfigure}[b]{0.3\linewidth}
+    \begin{subfigure}[b]{0.35\linewidth}
         \centering
         \begin{tikzpicture}
             \begin{knot}[
@@ -1368,13 +1357,13 @@ Note that the new move (the move introduced between Figure \ref{fig:fig8clrd} an
                     to (4.5,1)
                 ;
                 \strand [red,thick] (4.5,1)
-                    to [out=90,in=90] (1,1)
+                    to [out=90,in=90,looseness=0.9] (1,1)
                     to (1,-1)
                     to [out=-90,in=-90] (2,-1)
                     to (2,1)
                     to [out=90,in=90] (3,1)
                     to (3,-1)
-                    to [out=-90,in=-90] (-0.5,-1)
+                    to [out=-90,in=-90,looseness=0.9] (-0.5,-1)
                     to (-0.5,-0.5)
                     to [out=90,in=180] (0,0)
                 ;
@@ -1392,7 +1381,7 @@ Note that the new move (the move introduced between Figure \ref{fig:fig8clrd} an
         \caption{3 bridges.}
         \label{fig:trefoilcirclea}
     \end{subfigure}
-    \begin{subfigure}[b]{0.3\linewidth}
+    \begin{subfigure}[b]{0.35\linewidth}
         \centering
         \begin{tikzpicture}
             \begin{knot}[
@@ -1408,7 +1397,7 @@ Note that the new move (the move introduced between Figure \ref{fig:fig8clrd} an
                     to (4.5,1)
                 ;
                 \strand [red,thick] (4.5,1)
-                    to [out=90,in=90] (1,1)
+                    to [out=90,in=90,looseness=0.9] (1,1)
                     to (1,0.8)
                     to [out=-90,in=90] (2.5,0.1)
                     to (2.5,-0.1)
@@ -1418,7 +1407,7 @@ Note that the new move (the move introduced between Figure \ref{fig:fig8clrd} an
                     to (2,1)
                     to [out=90,in=90] (3,1)
                     to (3,-1)
-                    to [out=-90,in=-90] (-0.5,-1)
+                    to [out=-90,in=-90,looseness=0.9] (-0.5,-1)
                     to (-0.5,-0.5)
                     to [out=90,in=180] (0,0)
                 ;
@@ -1446,8 +1435,8 @@ Although it will not be shown here, the same thing would indeed work with the fi
 
 \subsection{Bridging Moves}\label{sss:bridging}
 Section \ref{sss:evidence} introduced three techniques for finding projections with the minimal number of bridges. This section will more rigorously define those strategies and explore their properties.\par
-The first technique introduced was the aptly named killzone. This procedure will not be discussed at length here since it and two of its derivatives (the superior and ideal killzone) have already been given formal definitions. Suffice to say generating the killzone is a perfectly legal way to manipulate a projection because a Dowker reconstruction and the original projection can be interconverted via a planar isotropy.\par
-The two moves used to actually remove bridges will be explored at length. Since their definitions will be based in the Reidemeister moves, those will presently be defined.\par
+The first technique introduced was the aptly named killzone. This procedure will not be discussed at length here since it and two of its derivatives (the superior and ideal killzone) have already been given formal definitions. Suffice to say generating the killzone is perfectly legal because a Dowker reconstruction and the original projection can be interconverted via a planar isotropy.\par
+The two moves used to actually remove bridges will be explored at length. Since their definitions are based in the Reidemeister moves, those will presently be defined.\par
 
 \begin{defi}
     \begin{description}
@@ -2031,7 +2020,7 @@ Perhaps the most significant application of the bridging moves is that they prov
 
 
 \subsection{Utility and Applications}\label{sss:utility}
-As evidenced by Sections \ref{ss2:trefoilreduce}, \ref{ss2:fig8reduce}, and \ref{ss2:trefoilreduce-2}, the bridging moves are powerful tools for reducing the number of bridges in a knot projection. Their utility continues into more complex examples as well without the need for further bridging moves (see the treatment of the $5_2$ knot in \emph{Exercise 3.11} of Section 3.2 of \cite{bib:knotnotes}). However, their applicability even extends beyond the bounds of the two-bridge knots.\par
+As evidenced by Sections \ref{ss2:trefoilreduce}, \ref{ss2:fig8reduce}, and \ref{ss2:trefoilreduce-2}, the bridging moves are powerful tools for reducing the number of bridges in a knot projection. Their utility continues into more complex examples as well without the need for further bridging moves (see \cite{bib:knotnotes}, Section 3.2, the treatment of the $5_2$ knot in \emph{Exercise 3.11}). However, their applicability even extends beyond the bounds of the two-bridge knots.\par
 
 \begin{figure}[h!]
     \centering
@@ -2227,7 +2216,7 @@ Reconstruct a knot projection from the pairings in Table \ref{tab:810Dowker} to 
 \end{figure}
 
 To avoid an issue similar to the one associated with Figure \ref{fig:fig8clr}, choose loops that are as separated as possible. Therefore, perform three Type I bridging moves on the left, left-center, and right loops, respectively, of Figure \ref{fig:810recon} to yield Figure \ref{fig:810clr}. This new projection is already down from eight bridges to five.\par
-At this point, it is time for Type II bridging moves. Of the five bridges in Figure \ref{fig:810clr}, four are two-crossing bridges and one is a three-crossing bridge. As with the figure-eight knot, it is preferable to work with a one-crossing bridge (or the bridge with the fewest number of crossings). Unfortunately, due to the four-way tie, there is no immediate front runner for which two bridges to combine. However, there exists a certain pair of two-crossing bridges separated by only one overpass, and every other pair of adjacent bridges is separated by at least two overpasses. Thus, with $8_{10}$ and unlike with the figure-eight knot, it is useful to consider how many overpasses separate the bridges when choosing with which one to work. Hence, the following.\par
+At this point, it is time for Type II bridging moves. Of the five bridges in Figure \ref{fig:810clr}, four are two-crossing bridges and one is a three-crossing bridge. As with the figure-eight knot, it is preferable to work with a one-crossing bridge (or the bridge with the fewest number of crossings). Unfortunately, due to the four-way tie, there is no immediate front runner for which two bridges to combine. However, there exists a pair of two-crossing bridges separated by only one overpass, and every other pair of adjacent bridges is separated by at least two overpasses. Thus, with $8_{10}$ and unlike with the figure-eight knot, it is useful to consider how many overpasses separate the bridges when choosing with which one to work. Hence, the following.\par
 
 \begin{conj}
     It is preferable to work with the bridge with the fewest overpasses separating it from the adjacent bridge.
@@ -2493,7 +2482,7 @@ Using three Type I bridging moves, two Type II bridging moves, and two 2-sets (s
 
 
 \section{Conjectures}
-In the course of writing this paper, several further ideas concerning my new theory of bridging moves have occurred to me. As no immediately evident proof has presented itself to me, I include this section to list several related conjectures that I strongly suspect to be true, but that I cannot yet prove to be true. Each will be followed by a short explanation of my current reasoning.
+In the course of writing this paper, several further ideas concerning this new theory of bridging moves have arisen. As no immediately evident proof has presented itself to me, I include this section to list several related conjectures. Each will be followed by a short explanation of my current reasoning.
 
 \begin{conj}
     Given a reduced projection of an alternating knot, sequences of Type I and Type II bridging moves suffice to find a minimal-bridge projection.
@@ -2548,7 +2537,7 @@ Thinking through $8_{10}$ in Section \ref{sss:utility} has led to several revela
     \end{description}
 \end{defi}
 
-In Figure \ref{fig:selfter}, notice how both the \textcolor{red}{red} strand and bridge $\color{grx}a$ separate bridge $\color{grx}a$ from bridge $\color{blue}b$. Because bridge $\color{grx}a$ is one of the two separating strands, this end of bridge $\color{grx}a$ is self-terminal.\par
+In Figure \ref{fig:selfter}, notice how both the \textcolor{red}{horizontal red} strand and bridge $\color{grx}a$ separate bridge $\color{grx}a$ from bridge $\color{blue}b$. Because bridge $\color{grx}a$ is one of the two separating strands, this end of bridge $\color{grx}a$ is self-terminal.\par
 Self-terminality has already played an important role. In choosing which direction to move the \textcolor{blue}{blue} and \textcolor{pux}{purple} subarcs of Figure \ref{fig:810clr-2}, I suspect that I \emph{had} to move them in the direction that I did because the end on the other side of them was self-terminal. Furthermore, based on my observations of the four-crossing and seven-crossing bridges in Figure \ref{fig:810clr-2}, I conjecture the following.
 
 \begin{conj}
@@ -2577,7 +2566,7 @@ I am undecided as to this last conjecture, but it would be nice if it were true.
     There is a simpler way to find a minimal-crossing minimal-bridge projection than by using the bridging moves and then eliminating extraneous crossings.
 \end{conj}
 
-This conjecture implies that while the bridging moves \emph{can} (as implied by the first conjecture) reduce the number of bridges to $b(K)$ and the Reidemeister moves \emph{can} then reduce the number of crossings to the fewest possible in a minimal-bridge projection, there exists some sort of hybrid method to accomplish both at the same time. Such a method would certainly be profound and would also be incredibly useful, but at least for now, the bridging moves are the pinnacle of my meditations.
+This conjecture implies that while the bridging moves \emph{can} (as implied by the first conjecture) reduce the number of bridges to $b(K)$ and the Reidemeister moves \emph{can} then reduce the number of crossings to the fewest possible in a minimal-bridge projection, there exists some sort of hybrid method to accomplish both at the same time. Such a method would certainly be profound and would also be incredibly useful, but at least for now, the bridging moves and self-terminality are the pinnacle of my meditations.
 \newpage
 
 
@@ -2590,9 +2579,9 @@ This conjecture implies that while the bridging moves \emph{can} (as implied by 
 
     \begin{bibcomment}
         \setlength{\leftskip}{1cm}
-        Colin Adams is an actively researching knot theorist and author. He has been a professor at Williams College for several decades and teaches, among other classes, a one-semester course in elementary knot theory that uses this text as the textbook. Over his summers, he participates in the SMALL Undergraduate Research Project at Williams College, during which he has proved several theorems in knot theory with visiting students and was inspired to write this book.\par
+        Colin Adams is an actively researching knot theorist and author. He has been a professor at Williams College for several decades and teaches, among other classes, a one-semester course in elementary knot theory that uses this text as the textbook. Over his summers, he participates in the SMALL Undergraduate Research Project at Williams College, during which he has proven several theorems in knot theory with visiting students and was inspired to write this book.\par
         \hspace{1em}\emph{The Knot Book} is a highly regarded work. It cherry-picks topics in knot theory, a subfield of mathematical topology only briefly touched upon in upper-level undergraduate courses at most institutions, that may be understood without the usual background in analysis, group theory, set theory, etc. Beginning with such basic definitions as that of a knot and link, it progresses to review knot notations, invariants, types, polynomials, and applications.\par
-        \hspace{1em}As the basis of the entirety of my research, \emph{The Knot Book} plays a central role in determining the ideas discussed in this paper. It is quoted on numerous occasions, especially for the purpose of precisely defining certain terms or wording the theorems that I prove. This paper diverges from \emph{The Knot Book} starting with Section 2, where it stops reviewing prior knowledge and begins developing its own theory. Section 3 bears no thematic connection to \emph{The Knot Book}, except, of course, for the underlying tenets of knot theory.\par
+        \hspace{1em}As the basis of the entirety of this research, \emph{The Knot Book} plays a central role in determining the ideas discussed in this paper. It is quoted on numerous occasions, especially for the purpose of precisely defining certain terms or wording the theorems that I prove. This paper diverges from \emph{The Knot Book} starting with Section 2, where it stops reviewing prior knowledge and begins developing its own theory. Section 3 bears no thematic connection to \emph{The Knot Book}, except, of course, for the underlying tenets of knot theory.\par
     \end{bibcomment}
 
     \bibitem[Labalme, 2020]{bib:knotnotes}
