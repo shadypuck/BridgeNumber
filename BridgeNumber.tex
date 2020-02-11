@@ -302,7 +302,7 @@ The previous two theorems together provide upper bounds on the bridge number of 
 \end{theor}
 
 \paragraph{Proof} If a knot has $b(K)=1$, there exists an embedding of it with at most one subarc lying above the projection plane and at most one subarc lying below the projection plane. These subarcs must be connected via vertices at either end. Assume that the projection plane is the $xy$-plane --- the knot will be considered in three-space in this proof.\par
-Choose one of the two vertices on the overpass and assign an orientation to the knot such that the next vertex encountered will be the one on the other end of the overpass. Assign the chosen vertex a $z$-value of $1$. Traversing the overpass, linearly decrease the $z$-value assigned to each point until arriving at the other vertex, which will be assigned a $z$-value of $0.1$. Assign a $z$-value of $-0.1$ to the vertex on the underpass corresponding to the $z=0.1$ vertex of the overpass. These two sides of the same vertex should be connected by a line. Traversing the underpass, linearly decrease the $z$-value assigned to each point until arriving at the other vertex, which will be assigned a $z$-value of $-1$. The $z=-1$ and $z=1$ vertices should be connected by a line. Viewed from the top, this will be exactly the same knot. However, owing to the constantly decreasing $z$-value, this knot will be a loop with no crossings when viewed from the side. From this side view, it is clear that the knot is a planar isotropy of the unknot (a distortion of Figure \ref{fig:unknota}), and, therefore, is the unknot.
+Choose one of the two vertices on the overpass and assign an orientation to the knot such that the next vertex encountered will be the one on the other end of the overpass. Assign the chosen vertex a $z$-value of $1$. Traversing the overpass, linearly decrease the $z$-value assigned to each point until arriving at the other vertex, which will be assigned a $z$-value of $0.1$. Assign a $z$-value of $-0.1$ to the vertex on the underpass corresponding to the $z=0.1$ vertex of the overpass. These two sides of the same vertex should be connected by a line. Traversing the underpass, linearly decrease the $z$-value assigned to each point until arriving at the other vertex, which will be assigned a $z$-value of $-1$. The $z=-1$ and $z=1$ vertices should be connected by a line. Viewed from the top, this will be exactly the same knot. However, owing to the constantly decreasing $z$-value, this knot will be a loop with no crossings when viewed from the side. From this side view, it is clear that the knot is a planar isotopy of the unknot (a distortion of Figure \ref{fig:unknota}), and, therefore, is the unknot.
 \qed
 
 
@@ -562,7 +562,7 @@ The final reconstruction in Figure \ref{fig:trefoilreconc} is particularly usefu
 
 \begin{defi}
     \begin{description}
-        \item[Killzone] \hfill \\ The small region of a Dowker reconstruction that encloses all crossings in a rectilinear polygon; all crossings are arrayed along a grid.
+        \item[Killzone] \hfill \\ The small region of a non-isotoped Dowker reconstruction that encloses all crossings in a rectilinear polygon; all crossings are arrayed along a grid.
     \end{description}
 \end{defi}
 
@@ -910,7 +910,7 @@ Sort the numbers into reconstruction pairings, as in Table \ref{tab:fig8Dowker}.
     \label{fig:fig8recon}
 \end{figure}
 
-Reconstruct knot projections from the pairings in Table \ref{tab:fig8Dowker} to yield Figure \ref{fig:fig8recon}. This should make the difference more apparent.\par
+Reconstruct knot projections from the pairings in Table \ref{tab:fig8Dowker} to yield Figure \ref{fig:fig8recon}. Outlining the killzone in each, as in Figure \ref{fig:fig8klzn}, should make the difference fully apparent. While the killzone is rectangular in Figure \ref{fig:fig8klzna}, it is merely a rectilinear polygon in Figure \ref{fig:fig8klznb}. Because of the linearity of the killzone in Figure \ref{fig:fig8recona}, it is a superior starting projection for reducing bridge number.\par
 
 \begin{figure}[h!]
     \centering
@@ -988,15 +988,14 @@ Reconstruct knot projections from the pairings in Table \ref{tab:fig8Dowker} to 
     \label{fig:fig8klzn}
 \end{figure}
 
-Outlining the killzone in each, as in Figure \ref{fig:fig8klzn}, should make the difference fully apparent. While the killzone is rectangular in Figure \ref{fig:fig8klzna}, it is merely a rectilinear polygon in Figure \ref{fig:fig8klznb}. Because of the linearity of the killzone in Figure \ref{fig:fig8recona}, it is a superior starting projection for reducing bridge number.\par
-There was a way to tell, even from the get-go, that the Dowker labeling in Figure \ref{fig:fig8Dowkerb} was not the best. In Figure \ref{fig:fig8Dowkera}, each crossing is passed through once before being passed through again while in Figure \ref{fig:fig8Dowkerb}, only three crossings are passed through before revisiting a previous crossing. This may be obvious, but it is critical to understand the following self-evident theorem.
+There was a way to tell, even from the get-go, that the Dowker labeling in Figure \ref{fig:fig8Dowkerb} was not the best. In Figure \ref{fig:fig8Dowkera}, each crossing is passed through once before being passed through again while in Figure \ref{fig:fig8Dowkerb}, only three crossings are passed through before revisiting a previous crossing. This may be obvious, but it is critical to understand the following self-evident theorem$^[$\footnote{"Base strand" refers to the linear strand from the first-drawn crossing to the crossing drawn last before looping back to a previously drawn crossing. For a visualization, consider the transition from Figure \ref{fig:trefoilrecona} to \ref{fig:trefoilreconb}, during which the base strand is extended as new crossings are drawn.}$^]$.
 
 \begin{theor}
     The number of crossings traversed before returning to a previously numbered crossing when labeling is equal to the number of crossings on the base strand in the Dowker reconstruction.
 \end{theor}
 
 As such, one should always try to maximize this number. Even if the issue escaped notice while labeling, the resultant pairings in Table \ref{tab:fig8Dowkerb} throw up an unmistakable numerical red flag --- \emph{whenever there is a skipped number in the bottom row, one should look for a superior Dowker labeling}.\par
-At this point, two more definitions (below) will help clarify what constitutes the best possible Dowker labeling.
+At this point, two more definitions can clarify what constitutes the best possible Dowker labeling.
 
 \begin{defi}
     \begin{description}
@@ -1277,7 +1276,7 @@ Notably, every bridge removed thus far (one in Figure \ref{fig:trefoilclr} and o
     \label{fig:fig8clr-2}
 \end{figure}
 
-Proceeding with Figure \ref{fig:fig8clrd}, it should be clear that the move that has been used thus far cannot be used again (there are no more loops around the killzone that have not already been "flipped"). Therefore, a new move is needed. If we freeze the strands outside the killzone, as intended, imagine that the segments within can "wiggle around" a bit, distorting themselves at will via planar isotropies and moored only at either end by the dashes (killzone boundaries). In the course of their wiggling, one strand might pass over another crossing --- this is key. If the \textcolor{yly}{dark yellow} strand can "wiggle" past and over the top of the crossing to the right, as in Figure \ref{fig:fig8clr-2}, \emph{there will no longer be an understrand (part of the \textcolor{ylz}{light yellow} bridge) separating the \textcolor{grx}{green} bridge and the \textcolor{red}{red} strand past the \textcolor{blue}{blue} bridge} and \emph{no new bridges will have been created}.\par
+Proceeding with Figure \ref{fig:fig8clrd}, it should be clear that the move that has been used thus far cannot be used again (there are no more loops around the killzone that have not already been "flipped"). Therefore, a new move is needed. If we freeze the strands outside the killzone, as intended, imagine that the segments within can "wiggle around" a bit, distorting themselves at will via planar isotopies and moored only at either end by the dashes (killzone boundaries). In the course of their wiggling, one strand might pass over another crossing --- this is key. If the \textcolor{yly}{dark yellow} strand can "wiggle" past and over the top of the crossing to the right, as in Figure \ref{fig:fig8clr-2}, \emph{there will no longer be an understrand (part of the \textcolor{ylz}{light yellow} bridge) separating the \textcolor{grx}{green} bridge and the \textcolor{red}{red} strand past the \textcolor{blue}{blue} bridge} and \emph{no new bridges will have been created}.\par
 
 \begin{figure}[h!]
     \centering
@@ -1420,7 +1419,7 @@ Although it will not be shown here, the same thing would indeed work with the fi
 
 \subsection{Bridging Moves}\label{sss:bridging}
 Section \ref{sss:evidence} introduced three techniques for finding projections with the minimal number of bridges. This section will more rigorously define those strategies and explore their properties.\par
-The first technique introduced was the aptly named killzone. This procedure will not be discussed at length here since it and two of its derivatives (the superior and ideal killzone) have already been given formal definitions. Suffice to say generating the killzone is perfectly legal because a Dowker reconstruction and the original projection can be interconverted via a planar isotropy.\par
+The first technique introduced was the aptly named killzone. This procedure will not be discussed at length here since it and two of its derivatives (the superior and ideal killzone) have already been given formal definitions. Suffice to say generating the killzone is perfectly legal because a Dowker reconstruction and the original projection can be interconverted via a planar isotopy.\par
 The two moves used to actually remove bridges will be explored at length. Since their definitions are based in the Reidemeister moves, those will presently be defined.\par
 
 \begin{figure}[h!]
@@ -1706,7 +1705,7 @@ The two moves used to actually remove bridges will be explored at length. Since 
     \end{description}
 \end{defi}
 
-In 1926, Kurt Reidemeister proved that two projections of the same knot can be interconverted using only the Reidemeister moves (see Figure \ref{fig:reidem}) and planar isotropies. Furthermore, Reidemeister moves are legal (transformations that do not change a projection of one knot into that of a different, distinct knot). Therefore, if the two moves used to remove bridges above are legal moves, there should be a sequence of Reidemeister moves that sums to them. First, however, define these "bridging moves" as follows.\par
+In 1926, Kurt Reidemeister proved that two projections of the same knot can be interconverted using only the Reidemeister moves (see Figure \ref{fig:reidem}) and planar isotopies. Furthermore, Reidemeister moves are legal (transformations that do not change a projection of one knot into that of a different, distinct knot). Therefore, if the two moves used to remove bridges above are legal moves, there should be a sequence of Reidemeister moves that sums to them. First, however, define these "bridging moves" as follows.\par
 
 \begin{figure}[h!]
     \centering
@@ -1830,7 +1829,7 @@ In 1926, Kurt Reidemeister proved that two projections of the same knot can be i
     \end{description}
 \end{defi}
 
-Note that unlike the Reidemeister moves, which can go in either direction as shown by the double-headed arrows in Figure \ref{fig:reidem}, the bridging moves flow in one, specific direction, as shown by the single-headed arrows in Figure \ref{fig:bridge}. This is because a reversal of direction would increase the number of bridges in many cases, which is not the desired result. Note also that if the strand $\color{grx}a$ is curved at the top as opposed to the bottom (notice the bottom curves in Figure \ref{fig:bridgea}), the transformation is still a Type I bridging move. The reason that such examples are not shown is because the components on both sides of the "OR" could be rotated $180^\circ$ about an axis perpendicular to the page to show this. This rotation is simply a planar isotropy, and, thus, showing it would be unnecessarily redundant. Lastly, note that one could think of a Type II bridging move, as seen in Figure \ref{fig:bridgeb}, as pulling the understrand rather than the overstrand. Since both perspectives are interconvertible via planar isotropy, the overstrand is arbitrarily chosen to move.\par
+Note that unlike the Reidemeister moves, which can go in either direction as shown by the double-headed arrows in Figure \ref{fig:reidem}, the bridging moves flow in one, specific direction, as shown by the single-headed arrows in Figure \ref{fig:bridge}. This is because a reversal of direction would increase the number of bridges in many cases, which is not the desired result. Note also that if the strand $\color{grx}a$ is curved at the top as opposed to the bottom (notice the bottom curves in Figure \ref{fig:bridgea}), the transformation is still a Type I bridging move. The reason that such examples are not shown is because the components on both sides of the "OR" could be rotated $180^\circ$ about an axis perpendicular to the page to show this. This rotation is simply a planar isotopy, and, thus, showing it would be unnecessarily redundant. Lastly, note that one could think of a Type II bridging move, as seen in Figure \ref{fig:bridgeb}, as pulling the understrand rather than the overstrand. Since both perspectives are interconvertible via planar isotopy, the overstrand is arbitrarily chosen to move.\par
 
 \begin{figure}[h!]
     \centering
@@ -1892,7 +1891,7 @@ Note that unlike the Reidemeister moves, which can go in either direction as sho
             \draw[very thick,-latex,xshift=7.75cm] (-0.55,0) -- node[above]{
                 \begin{tabular}{c}
                     Planar\\
-                    Isotropy
+                    Isotopy
                 \end{tabular}
             } (0.55,0);
             \begin{knot}[
@@ -1970,7 +1969,7 @@ Note that unlike the Reidemeister moves, which can go in either direction as sho
             \draw[very thick,-latex,xshift=7.75cm] (-0.55,0) -- node[above]{
                 \begin{tabular}{c}
                     Planar\\
-                    Isotropy
+                    Isotopy
                 \end{tabular}
             } (0.55,0);
             \begin{knot}[
